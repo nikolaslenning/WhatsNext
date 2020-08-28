@@ -1,0 +1,13 @@
+#imgsize{
+    width: 400px;
+    height: 400px;
+}
+body{
+    background-color:black;
+}
+#navbar{
+    background-color: red !important;
+}
+#box{
+    color: red;
+}
