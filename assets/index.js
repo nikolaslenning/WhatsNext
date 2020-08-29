@@ -28,38 +28,36 @@ function pull() {
 	$.ajax(newSettings).done(function (newResponse) {
 		// console.log(newResponse.ITEMS[0].rating);
 		$(".p1").text("Rating: " + newResponse.ITEMS[0].rating)
-		console.log(newResponse.ITEMS[0].title); //we the maries
+		// console.log(newResponse.ITEMS[0].title); //we the maries
 
+		var cardBox = $('#card-box');
 		var arraySlice = newResponse.ITEMS.slice(0, 10)
 		arraySlice.forEach(function (currentElement, index, array) {
-			var index = ('');
-			var movieCardDiv = $('<div>');
-			var titleDiv = $('<div>');
-			var typeDiv = $('<div>');
-			var runtimeDiv = $('<div>');
-			var synopsisDiv = $('<div>');
-			var imageDiv = $('<img>');
-			$(movieCardDiv).attr('class', 'uk-placeholder uk-text-center');
-			$(titleDiv).text(currentElement.ITEMS.title) // 0 or index don't work
 			console.log(currentElement);
-			// console.log(newResponse);
+			console.log(currentElement.title);
+			// console.log(newResponse.ITEMS);
+			var movieCardDiv = $('<div>');
+			var titleDiv = $('<p>');
+			var typeDiv = $('<p>');
+			var runtimeDiv = $('<p>');
+			var synopsisDiv = $('<p>');
+			var imageDiv = $('<img>');
+			
+			movieCardDiv.attr('class', 'uk-placeholder uk-text-center');
+			titleDiv.text (currentElement.title) // 0 or index don't work
+			console.log(currentElement.title);
+			typeDiv.text(currentElement.type);
+			runtimeDiv.text(currentElement.runtime);
+			synopsisDiv.html(currentElement.synopsis);
+			imageDiv.attr('src', currentElement.image);
 
-
-			$(movieCardDiv).appendChild(titleDiv);
-			$(movieCardDiv).appendChild(typeDiv);
-			$(movieCardDiv).appendChild(runtimeDiv);
-			$(movieCardDiv).appendChild(synopsisDiv);
-			$(movieCardDiv).appendChild(imageDiv);
-			$('#box').append(movieCardDiv);
+			movieCardDiv.append(imageDiv);
+			movieCardDiv.append(titleDiv);
+			movieCardDiv.append(typeDiv);
+			movieCardDiv.append(runtimeDiv);
+			movieCardDiv.append(synopsisDiv);
+			cardBox.append(movieCardDiv);
 		})
-
-
-
-
-
-		//pull image
-		//, xxtitle, xxtype, xxruntime xxsynopsis
-		//append to cards class = "uk-placeholder uk-text-center"
 	});
 }
 var expireSettings = {
