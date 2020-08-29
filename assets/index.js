@@ -38,7 +38,7 @@ function pull() {
 	$.ajax(newSettings).done(function (newResponse) {
 
 		var cardBox = $('#coming-card-box');
-		var arraySlice = newResponse.ITEMS.slice(0, 10)
+		var arraySlice = newResponse.ITEMS.slice(0, 99)
 		arraySlice.forEach(function (currentElement, index, array) {
 			console.log(currentElement);
 			console.log(currentElement.title);
@@ -102,20 +102,22 @@ function pull() {
 	});
 
 
-	// var movie = $(this).attr("data-name");
-	// var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
-	// $.ajax({
-	// 	url: queryURL,
-	// 	method: "GET"
-	// }).then(function (response) {
-	// 	// $("#movies-view").text(JSON.stringify(response));
-
-
-
-
-
-
-	// });
+	var movie = $(this).attr("data-name");
+	var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
+	$.ajax({
+		url: queryURL,
+		method: "GET"
+	}).then(function (response) {
+		//Ratings: rotten tomato, metacritic, internet movie database
+		//Rating: R, Pg-13, nc-17
+		//Country: country produced
+		
+		
+		
+		
+		
+		// $("#movies-view").text(JSON.stringify(response));
+	});
 
 
 };
