@@ -29,6 +29,10 @@ function pull() {
 		console.log(newResponse.ITEMS[0].rating);
 		$(".p1").text("Rating: " + newResponse.ITEMS[0].rating)
 		console.log(newResponse);
+		
+
+
+
 	});
 }
 	var expireSettings = {
