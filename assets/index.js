@@ -29,7 +29,7 @@ function pull() {
 		console.log(newResponse.ITEMS[0].rating);
 		$(".p1").text("Rating: " + newResponse.ITEMS[0].rating)
 		console.log(newResponse);
-		
+
 
 
 
@@ -50,3 +50,18 @@ function pull() {
 	// $.ajax(expireSettings).done(function (expireResponse) {
 	// 	console.log(expireResponse);
 pull();
+
+var movie = $(this).attr("data-name");
+        var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
+        $.ajax({
+          url: queryURL,
+          method: "GET"
+        }).then(function(response) {
+          $("#movies-view").text(JSON.stringify(response));
+        });
+      
+
+
+
+
+
