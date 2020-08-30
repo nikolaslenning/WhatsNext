@@ -38,24 +38,25 @@ function pull() {
 	$.ajax(newSettings).done(function (newResponse) {
 
 		var cardBox = $('#coming-card-box');
-		var arraySlice = newResponse.ITEMS.slice(0, 99)
+		var arraySlice = newResponse.ITEMS.slice(0, 10)
 		arraySlice.forEach(function (currentElement, index, array) {
 			console.log(currentElement);
 			console.log(currentElement.title);
 			// console.log(newResponse.ITEMS);
 			var movieCardDiv = $('<div>');
-			var titleDiv = $('<p>');
+			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
 			var runtimeDiv = $('<p>');
 			var synopsisDiv = $('<p>');
 			var imageDiv = $('<img>');
+			var movieTitle = currentElement.title
 
 			movieCardDiv.attr('class', 'uk-placeholder uk-text-center');
-			titleDiv.text(currentElement.title) // 0 or index don't work
+			titleDiv.text('Title: ' + currentElement.title);
 			console.log(currentElement.title);
-			typeDiv.text(currentElement.type);
-			runtimeDiv.text(currentElement.runtime);
-			synopsisDiv.html(currentElement.synopsis);
+			typeDiv.text('Type: ' + currentElement.type);
+			runtimeDiv.text("Runtime: " + currentElement.runtime);
+			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
 
 			movieCardDiv.append(imageDiv);
@@ -64,42 +65,99 @@ function pull() {
 			movieCardDiv.append(runtimeDiv);
 			movieCardDiv.append(synopsisDiv);
 			cardBox.append(movieCardDiv);
-		})
-	});
 
+			var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
+			$.ajax({
+				url: queryURL,
+				method: "GET"
+			}).then(function (responseOMDB) {
+				var MPAArating = responseOMDB.Rated;
+				var originCountry = responseOMDB.Country;
+				var criticRating = responseOMDB.Ratings
 
+				var boxMPAA = $('<p>');
+				var boxOriginCountry = $('<p>');
+				var boxCriticRating = $('<p>');
 
-	$.ajax(expireSettings).done(function (expireResponse) {
-		console.log(expireResponse);
-		var cardBox = $('#going-card-box');
-		var arraySlice = expireResponse.ITEMS.slice(0, 10)
-		arraySlice.forEach(function (currentElement, index, array) {
-			console.log(currentElement);
-			console.log(currentElement.title);
-			// console.log(newResponse.ITEMS);
-			var movieCardDiv = $('<div>');
-			var titleDiv = $('<p>');
-			var typeDiv = $('<p>');
-			var runtimeDiv = $('<p>');
-			var synopsisDiv = $('<p>');
-			var imageDiv = $('<img>');
+				boxMPAA.text('Rated: ' + MPAArating);
+				boxOriginCountry.text('Country: ' + originCountry);
+				boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
 
-			movieCardDiv.attr('class', 'uk-placeholder uk-text-center');
-			titleDiv.text(currentElement.title) // 0 or index don't work
-			console.log(currentElement.title);
-			typeDiv.text(currentElement.type);
-			runtimeDiv.text(currentElement.runtime);
-			synopsisDiv.html(currentElement.synopsis);
-			imageDiv.attr('src', currentElement.image);
+				movieCardDiv.append(boxMPAA);
+				movieCardDiv.append(boxOriginCountry);
+				movieCardDiv.append(boxCriticRating);
 
-			movieCardDiv.append(imageDiv);
-			movieCardDiv.append(titleDiv);
-			movieCardDiv.append(typeDiv);
-			movieCardDiv.append(runtimeDiv);
-			movieCardDiv.append(synopsisDiv);
-			cardBox.append(movieCardDiv);
+				console.log(responseOMDB);
+				console.log(criticRating);
+				console.log(originCountry);
+			});
 		});
 	});
+
+
+
+	// $.ajax(expireSettings).done(function (expireResponse) {
+	// 	// console.log(expireResponse);
+	// 	var cardBox = $('#going-card-box');
+	// 	var arraySlice = expireResponse.ITEMS.slice(0, 10)
+	// 	arraySlice.forEach(function (currentElement, index, array) {
+	// 		// console.log(currentElement);
+	// 		// console.log(currentElement.title);
+	// 		// console.log(newResponse.ITEMS);
+	// 		var movieCardDiv = $('<div>');
+	// 		var titleDiv = $('<h3>');
+	// 		var typeDiv = $('<p>');
+	// 		var runtimeDiv = $('<p>');
+	// 		var synopsisDiv = $('<p>');
+	// 		var imageDiv = $('<img>');
+	// 		var movieTitle = currentElement.title
+
+
+	// 		movieCardDiv.attr('class', 'uk-placeholder uk-text-center');
+	// 		titleDiv.text('Title: ' + currentElement.title);
+	// 		// console.log(currentElement.title);
+	// 		typeDiv.text('Type: ' + currentElement.type);
+	// 		runtimeDiv.text("Runtime: " + currentElement.runtime);
+	// 		synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
+	// 		imageDiv.attr('src', currentElement.image);
+
+	// 		movieCardDiv.append(imageDiv);
+	// 		movieCardDiv.append(titleDiv);
+	// 		movieCardDiv.append(typeDiv);
+	// 		movieCardDiv.append(runtimeDiv);
+	// 		movieCardDiv.append(synopsisDiv);
+	// 		cardBox.append(movieCardDiv);
+
+	// 		var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
+	// 		$.ajax({
+	// 			url: queryURL,
+	// 			method: "GET"
+	// 		}).then(function (responseOMDB) {
+	// 			var MPAArating = responseOMDB.Rated;
+	// 			var originCountry = responseOMDB.Country;
+	// 			var criticRating = responseOMDB.Ratings
+
+	// 			var boxMPAA = $('<p>');
+	// 			var boxOriginCountry = $('<p>');
+	// 			var boxCriticRating = $('<p>');
+
+	// 			boxMPAA.text('Rated: ' + MPAArating);
+	// 			boxOriginCountry.text('Country: ' + originCountry);
+	// 			boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
+
+	// 			movieCardDiv.append(boxMPAA);
+	// 			movieCardDiv.append(boxOriginCountry);
+	// 			movieCardDiv.append(boxCriticRating);
+
+	// 			console.log(responseOMDB);
+	// 			console.log(criticRating);
+	// 			console.log(originCountry);
+
+
+
+	// 		});
+	// 	});
+	// });
 
 
 	var movie = $(this).attr("data-name");
@@ -111,11 +169,11 @@ function pull() {
 		//Ratings: rotten tomato, metacritic, internet movie database
 		//Rating: R, Pg-13, nc-17
 		//Country: country produced
-		
-		
-		
-		
-		
+
+
+
+
+
 		// $("#movies-view").text(JSON.stringify(response));
 	});
 
