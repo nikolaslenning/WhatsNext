@@ -1,10 +1,5 @@
 
 // Set API in carousel
-// var index = 0
-
-
-
-
 // Function that calls 2nd API so both can occupy same carousel
 // Set array to carousel
 // Scope API and determine additional functionality 
@@ -79,7 +74,7 @@ function pull() {
 				var boxOriginCountry = $('<p>');
 				var boxCriticRating = $('<p>');
 
-				boxMPAA.text('Rated: ' + MPAArating);
+				boxMPAA.text('MPAA Rating: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
 				boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
 
@@ -159,28 +154,9 @@ function pull() {
 	// 	});
 	// });
 
-
-	var movie = $(this).attr("data-name");
-	var queryURL = "https://www.omdbapi.com/?t=" + movie + "&apikey=trilogy";
-	$.ajax({
-		url: queryURL,
-		method: "GET"
-	}).then(function (response) {
-		//Ratings: rotten tomato, metacritic, internet movie database
-		//Rating: R, Pg-13, nc-17
-		//Country: country produced
-
-
-
-
-
-		// $("#movies-view").text(JSON.stringify(response));
-	});
-
-
 };
 pull();
-//pull genre,
+
 
 
 
