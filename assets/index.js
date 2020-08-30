@@ -69,6 +69,7 @@ function pull() {
 				var MPAArating = responseOMDB.Rated;
 				var originCountry = responseOMDB.Country;
 				var criticRating = responseOMDB.Ratings
+				var runtimeOMDB = responseOMDB.Runtime // not sure if needed or a way to not display if result is N/A
 
 				var boxMPAA = $('<p>');
 				var boxOriginCountry = $('<p>');
@@ -77,11 +78,12 @@ function pull() {
 				boxMPAA.text('MPAA Rating: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
 				boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
-
+				
 				movieCardDiv.append(boxMPAA);
 				movieCardDiv.append(boxOriginCountry);
 				movieCardDiv.append(boxCriticRating);
-
+				runtimeDiv.append(runtimeOMDB); // not sure if needed or a way to not display if result is N/A
+				
 				console.log(responseOMDB);
 				console.log(criticRating);
 				console.log(originCountry);
