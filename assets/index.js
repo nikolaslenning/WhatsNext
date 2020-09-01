@@ -33,7 +33,7 @@ function pull() {
 	$.ajax(newSettings).done(function (newResponse) {
 
 		var cardBox = $('#coming-card-box');
-		var arraySlice = newResponse.ITEMS.slice(0, 10)
+		var arraySlice = newResponse.ITEMS.slice(0, 90)
 		arraySlice.forEach(function (currentElement, index, array) {
 			console.log(currentElement);
 			console.log(currentElement.title);
@@ -44,7 +44,7 @@ function pull() {
 			var runtimeDiv = $('<p>');
 			var synopsisDiv = $('<p>');
 			var imageDiv = $('<img>');
-			var movieTitle = currentElement.title
+			var movieTitle = currentElement.title;
 
 			movieCardDiv.attr('class', 'uk-placeholder uk-text-center');
 			titleDiv.text('Title: ' + currentElement.title);
