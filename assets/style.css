@@ -6,10 +6,10 @@ body{
     background-color:black;
 }
 #navbar{
-    background-color: red !important;
+    background-color:  #E50914 !important;
 }
 #box{
-    color: red;
+    color:  #E50914;
 }
 body {
     background: #eee;
@@ -60,4 +60,15 @@ body {
     border-radius: 4px;
     margin: 0 10px;
     font-size: 13px;
+  }
+  #title {
+    font-family: 'Righteous', cursive;
+    color: black;
+
+  }
+  footer{
+
+    width: auto;
+    height: 100px;  
+      background-color: black;
   }

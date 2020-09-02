@@ -6,10 +6,11 @@
   <title>What Next / Home</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="./assets/style.css">
+  <link rel="stylesheet" href="./style.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.7/dist/css/uikit.min.css" />
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.css">
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Righteous&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -17,31 +18,24 @@
     <div class="uk-navbar-left">
 
       <ul class="uk-navbar-nav">
-        <li class="uk-active"><a href="#">Active</a></li>
-        <li>
-          <a href="#">Parent</a>
-          <div class="uk-navbar-dropdown">
-            <ul class="uk-nav uk-navbar-dropdown-nav">
-              <li class="uk-active"><a href="#">Active</a></li>
-              <li><a href="#">Item</a></li>
-              <li><a href="#">Item</a></li>
-            </ul>
-          </div>
-        </li>
-        <li><a href="#">Item</a></li>
+        <li class="uk-active" ><a id="title" href="./index.html">Whats Next!</a></li>
+        <li class="uk-active"><a id="title" href="#">Whats Gone!</a></li>
       </ul>
     </div>
     <div class="uk-navbar-center">
-        <h1>What's Next!</h1>
+        <h1 id="title">What's Next!</h1>
       </ul>
 
     </div>
 
   </nav>
+
+  </nav>
   <body>
     <!-- Swiper -->
     <div class="swiper-container">
-      <div class="swiper-wrapper"></div>
+      <div id='swiper-wrapper' class="swiper-wrapper"></div>
+        <div id = "coming-card-box"></div>
       <!-- Add Pagination -->
       <div class="swiper-pagination"></div>
       <!-- Add Arrows -->
@@ -56,7 +50,9 @@
        <a href="#" class="append-slide">Append Slide</a>
     </p>
     <!-- Swiper JS -->
-   
+   <footer>
+<P>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ipsam soluta, placeat ab maxime quasi provident laudantium facilis sed eos laborum fugiat nam corporis voluptatem esse fuga omnis nostrum id iure!</P>
+</footer>
     
   
   <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
@@ -66,3 +62,4 @@
   <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script src="./assets/index.js"></script> 
 </body>
+</html>
