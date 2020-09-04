@@ -6,6 +6,9 @@
 // // Display synopsis and critical data (RT, IMDb) below when image clicked
 
 // Variables that hold our AJAX request information 
+let savedcards = [] 
+savedcards = JSON.parse(localStorage.getItem("movieCardList"))
+console.log(savedcards)
 var newSettings = {
 	"async": true,
 	"crossDomain": true,
@@ -35,8 +38,8 @@ function pull() {
 		//card that holds all appended information from unogs ajax request
 		var cardBox = $('#swiper-wrapper');
 		//variable that takes slice of ajax info from index 0 to 99
-		var arraySlice = newResponse.ITEMS.slice(0, 99)
-		//
+		// var arraySlice = newResponse.ITEMS.slice(0, 99)
+		var arraySlice = savedcards
 		arraySlice.forEach(function (currentElement, index, array) {
 			// console.log(currentElement);
 			// console.log(currentElement.title);
@@ -50,10 +53,11 @@ function pull() {
 			var synopsisDiv = $('<p>');
 			var imageDiv = $('<img>');
 			var movieTitle = currentElement.title;
-
+			let savebtn = $('<button>');
+		
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
-			movieCardDiv.attr('class', "swiper-slide");
+			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
 			titleDiv.text('Title: ' + currentElement.title);
 			// console.log(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
@@ -68,6 +72,34 @@ function pull() {
 			movieCardDiv.append(runtimeDiv);
 			movieCardDiv.append(synopsisDiv);
 			cardBox.append(movieCardDiv);
+			movieCardDiv.append(savebtn)
+
+			// step one make btn
+
+		
+			savebtn.text('Save')
+			$(savebtn).on("click", function () {
+				
+				
+				if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)){
+					savedcards.push(currentElement)
+				}
+				
+				// get text from wawa 
+				// text area is saved in local storage
+				
+				localStorage.setItem("movieCardList",JSON.stringify (savedcards))
+			})
+			// data is retreved and displayed in textarea
+			// var save = localStorage.getItem(keyName)
+			// $(funbox).val(save);
+
+
+
+
+			// step two link to on click
+			// step three save to storage 
+			// step 4 pull on to new page
 
 			// 2nd Ajax request to OMDBi that uses information returned in the 1st ajax request above
 			var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
@@ -75,6 +107,7 @@ function pull() {
 				url: queryURL,
 				method: "GET"
 			}).then(function (responseOMDB) {
+				console.log(responseOMDB);
 				var responseLength = responseOMDB.length;
 				//create variables for the information recieved from ajax request
 				var MPAArating = responseOMDB.Rated;
@@ -90,7 +123,7 @@ function pull() {
 				//adding information recieved to the containers that were created above
 				boxMPAA.text('MPAA Rating: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
-				boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
+				boxCriticRating.text('Critic Rating: ' + criticRating);
 
 				//appending smaller containers houseing info to the main container displayed in the carousel
 				movieCardDiv.append(boxMPAA);
@@ -209,4 +242,4 @@ function pull() {
 
 //Calling pull function the start the ajax requests above
 
-// pull();
+pull();
