@@ -102,6 +102,12 @@ function pull() {
 				// console.log(responseOMDB);
 				// console.log(criticRating);
 				// console.log(originCountry);
+				for(var i = 0; i < criticRating.length; i++) {
+					var ratingDiv = $('<div>');
+					var criticResponse = responseOMDB.Ratings[i];
+					ratingDiv.text("Rating Div: " + criticResponse)
+					movieCardDiv.append(ratingDiv);
+				}
 
 				//creating swiper carousel 
 				var appendNumber = 600;
