@@ -209,4 +209,4 @@ function pull() {
 
 //Calling pull function the start the ajax requests above
 
-pull();
+// pull();
