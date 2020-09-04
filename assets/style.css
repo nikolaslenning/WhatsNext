@@ -67,10 +67,10 @@ body {
 
   }
   footer{
-
     width: auto;
-    height: 100px;  
-      background-color: black;
+    height: 10%;  
+    background-color: black;
+    margin-top: 25px;
   }
   .swiper-container {
     height: 720px;
