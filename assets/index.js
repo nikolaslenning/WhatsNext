@@ -75,6 +75,7 @@ function pull() {
 				url: queryURL,
 				method: "GET"
 			}).then(function (responseOMDB) {
+				console.log(responseOMDB);
 				var responseLength = responseOMDB.length;
 				//create variables for the information recieved from ajax request
 				var MPAArating = responseOMDB.Rated;
@@ -90,7 +91,7 @@ function pull() {
 				//adding information recieved to the containers that were created above
 				boxMPAA.text('MPAA Rating: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
-				boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
+				boxCriticRating.text('Critic Rating: ' + criticRating);
 
 				//appending smaller containers houseing info to the main container displayed in the carousel
 				movieCardDiv.append(boxMPAA);
