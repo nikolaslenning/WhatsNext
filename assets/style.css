@@ -72,3 +72,7 @@ body {
     height: 100px;  
       background-color: black;
   }
+  .swiper-container {
+    height: 600px;
+    text-align: center;
+   }
