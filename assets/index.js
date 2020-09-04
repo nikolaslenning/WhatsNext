@@ -117,15 +117,15 @@ function pull() {
 						nextEl: '.swiper-button-next',
 						prevEl: '.swiper-button-prev',
 					},
-					virtual: {
-						slides: (function () {
-							var slides = [];
-							for (var i = 0; i < 600; i += 1) {
-								slides.push('Slide ' + (i + 1));
-							}
-							return slides;
-						}()),
-					},
+					// virtual: {
+					// 	slides: (function () {
+					// 		var slides = [];
+					// 		for (var i = 0; i < 600; i += 1) {
+					// 			slides.push('Slide ' + (i + 1));
+					// 		}
+					// 		return slides;
+					// 	}()),
+					// },
 				});
 				document.querySelector('.slide-1').addEventListener('click', function (e) {
 					e.preventDefault();
@@ -209,4 +209,4 @@ function pull() {
 
 //Calling pull function the start the ajax requests above
 
-// pull();
+pull();
