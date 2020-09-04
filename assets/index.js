@@ -53,7 +53,7 @@ function pull() {
 
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
-			movieCardDiv.attr('class', "swiper-slide");
+			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
 			titleDiv.text('Title: ' + currentElement.title);
 			// console.log(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
@@ -209,4 +209,4 @@ function pull() {
 
 //Calling pull function the start the ajax requests above
 
-// pull();
+pull();
