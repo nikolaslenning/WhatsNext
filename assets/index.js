@@ -58,11 +58,13 @@ function pull() {
 			var imageDiv = $('<img>');
 			var movieTitle = currentElement.title;
 			let savebtn = $('<button>');
+			const apostrophe = /&#39/gi;
 		
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
 			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
-			titleDiv.text('Title: ' + currentElement.title);
+			titleDiv.text('Title: ' + currentElement.title); //
+			// titleDiv.replace(apostrophe, "'");
 			// console.log(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
 			runtimeDiv.text("Runtime: " + currentElement.runtime);
@@ -72,9 +74,9 @@ function pull() {
 			// appending containers housing info from ajax request to one container, then append that container to the carousel container swiper-wrapper
 			movieCardDiv.append(imageDiv);
 			movieCardDiv.append(titleDiv);
+			movieCardDiv.append(synopsisDiv);
 			movieCardDiv.append(typeDiv);
 			movieCardDiv.append(runtimeDiv);
-			movieCardDiv.append(synopsisDiv);
 			cardBox.append(movieCardDiv);
 			movieCardDiv.append(savebtn)
 
@@ -128,7 +130,7 @@ function pull() {
 				movieCardDiv.append(boxMPAA);
 				movieCardDiv.append(boxOriginCountry);
 				movieCardDiv.append(boxCriticRating);
-				runtimeDiv.append(runtimeOMDB); // not sure if needed or a way to not display if result is N/A
+				//runtimeDiv.append(runtimeOMDB); // not sure if needed or a way to not display if result is N/A
 
 				console.log(responseOMDB);
 				// console.log(criticRating);
