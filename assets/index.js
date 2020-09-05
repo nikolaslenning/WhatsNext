@@ -31,6 +31,7 @@ var expireSettings = {
 	}
 }
 
+
 // pull function houses both ajax request
 function pull() {
 	//ajax request for Netflix Information
@@ -38,9 +39,12 @@ function pull() {
 		//card that holds all appended information from unogs ajax request
 		var cardBox = $('#swiper-wrapper');
 		//variable that takes slice of ajax info from index 0 to 99
-		// var arraySlice = newResponse.ITEMS.slice(0, 99)
-		var arraySlice = savedcards
-		arraySlice.forEach(function (currentElement, index, array) {
+		var arraySlice = newResponse.ITEMS.slice(0, 99)
+		
+		//  save card active
+		 var arraySlice 
+		
+		 arraySlice.forEach(function (currentElement, index, array) {
 			// console.log(currentElement);
 			// console.log(currentElement.title);
 			// console.log(newResponse.ITEMS);
@@ -91,11 +95,6 @@ function pull() {
 				localStorage.setItem("movieCardList",JSON.stringify (savedcards))
 			})
 			// data is retreved and displayed in textarea
-			// var save = localStorage.getItem(keyName)
-			// $(funbox).val(save);
-
-
-
 
 			// step two link to on click
 			// step three save to storage 
