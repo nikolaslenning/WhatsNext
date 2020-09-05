@@ -133,7 +133,7 @@ function pull() {
 				movieCardDiv.append(boxCriticRating);
 				//runtimeDiv.append(runtimeOMDB); // not sure if needed or a way to not display if result is N/A
 
-				console.log(responseOMDB);
+				// console.log(responseOMDB);
 				// console.log(criticRating);
 				// console.log(originCountry);
 				for (var i = 0; i < criticRating.length; i++) {
@@ -298,6 +298,68 @@ function pull() {
 				// console.log(responseOMDB);
 				// console.log(criticRating);
 				// console.log(originCountry);
+				for (var i = 0; i < criticRating.length; i++) {
+					var ratingDiv = $('<div>');
+					var criticResponse = responseOMDB.Ratings[i];
+					//var ratingSource = criticResponse.Source;
+					//var ratingValue = criticResponse.Value
+					// console.log('criticResponse', '---------', criticResponse);
+					//ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
+					if (criticRating[i].Source === "Internet Movie Database") {
+						var imdbIcon = $("<img>");
+						imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("IMDBIcon");
+						var imdbNode = $("<div>").html(imdbIcon);
+						var imdbNodeText = criticRating[i].Value;
+						boxCriticRating.append(imdbNode);
+						imdbNode.append(imdbNodeText);
+					} 
+					else if (criticRating[i].Source === "Rotten Tomatoes") {
+						var rottenTomIcon = $('<img>');
+						rottenTomIcon.attr('src', './assets/IMG/tomato.png').addClass('RTIcon')
+						var tomatoNode = $('<div>').html(rottenTomIcon);
+						var tomatoNodeText = criticRating[i].Value;
+						boxCriticRating.append(tomatoNode);
+						tomatoNode.append(tomatoNodeText);
+					} 
+					else if (criticRating[i].Source === "Metacritic") {
+						var metaIcon = $('<img>');
+						metaIcon.attr('src', './assets/IMG/metacritic.png').addClass("metaIcon");
+						var metaNode = $('<div>').html(metaIcon);
+						var metaNodeText = criticRating[i].Value;
+						boxCriticRating.append(metaNode);
+						metaNode.append(metaNodeText);
+						console.log("I hit MetaCritic")
+					}
+					movieCardDiv.append(ratingDiv);
+				}
+				var appendNumber = 600;
+				var prependNumber = 1;
+				var swiper = new Swiper('.swiper-container', {
+					slidesPerView: 3,
+					centeredSlides: true,
+					spaceBetween: 30,
+					pagination: {
+						el: '.swiper-pagination',
+						type: 'fraction',
+					},
+					navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev',
+					},
+					
+				});
+				document.querySelector('.slide-1').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(0, 0);
+				});
+				document.querySelector('.slide-50').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(49, 0);
+				});
+				document.querySelector('.slide-100').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(99, 0);
+				});
 			});
 		});
 	});
