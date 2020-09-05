@@ -6,6 +6,9 @@
 // // Display synopsis and critical data (RT, IMDb) below when image clicked
 
 // Variables that hold our AJAX request information 
+let savedcards = [] 
+savedcards = JSON.parse(localStorage.getItem("movieCardList"))
+console.log(savedcards)
 var newSettings = {
 	"async": true,
 	"crossDomain": true,
@@ -28,6 +31,7 @@ var expireSettings = {
 	}
 }
 
+
 // pull function houses both ajax request
 function pull() {
 	//ajax request for Netflix Information
@@ -36,8 +40,11 @@ function pull() {
 		var cardBox = $('#swiper-wrapper');
 		//variable that takes slice of ajax info from index 0 to 99
 		var arraySlice = newResponse.ITEMS.slice(0, 99)
-		//
-		arraySlice.forEach(function (currentElement, index, array) {
+		
+		//  save card active
+		 var arraySlice 
+		
+		 arraySlice.forEach(function (currentElement, index, array) {
 			// console.log(currentElement);
 			// console.log(currentElement.title);
 			// console.log(newResponse.ITEMS);
@@ -50,7 +57,8 @@ function pull() {
 			var synopsisDiv = $('<p>');
 			var imageDiv = $('<img>');
 			var movieTitle = currentElement.title;
-
+			let savebtn = $('<button>');
+		
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
 			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
@@ -68,6 +76,29 @@ function pull() {
 			movieCardDiv.append(runtimeDiv);
 			movieCardDiv.append(synopsisDiv);
 			cardBox.append(movieCardDiv);
+			movieCardDiv.append(savebtn)
+
+			// step one make btn
+
+		
+			savebtn.text('Save')
+			$(savebtn).on("click", function () {
+				
+				
+				if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)){
+					savedcards.push(currentElement)
+				}
+				
+				// get text from wawa 
+				// text area is saved in local storage
+				
+				localStorage.setItem("movieCardList",JSON.stringify (savedcards))
+			})
+			// data is retreved and displayed in textarea
+
+			// step two link to on click
+			// step three save to storage 
+			// step 4 pull on to new page
 
 			// 2nd Ajax request to OMDBi that uses information returned in the 1st ajax request above
 			var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
