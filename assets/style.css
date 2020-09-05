@@ -1,70 +1,86 @@
+  
 #imgsize{
-    width: 400px;
-    height: 400px;
+  width: 400px;
+  height: 400px;
 }
 body{
-    background-color:black;
+  background-color:black;
 }
 #navbar{
-    background-color:  #E50914 !important;
+  background-color:  #E50914 !important;
 }
 #box{
-    color:  #E50914;
+  color:  #E50914;
 }
 body {
-    background: #eee;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-  }
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
 
-  .swiper-container {
-    width: 100%;
-    height: 300px;
-    margin: 20px auto;
-  }
+.swiper-container {
+  width: 100%;
+  height: 300px;
+  margin: 20px auto;
+}
 
-  .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: #fff;
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
 
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
-  }
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
 
-  .append-buttons {
-    text-align: center;
-    margin-top: 20px;
-  }
+.append-buttons {
+  text-align: center;
+  margin-top: 20px;
+}
 
-  .append-buttons a {
-    display: inline-block;
-    border: 1px solid #007aff;
-    color: #007aff;
-    text-decoration: none;
-    padding: 4px 10px;
-    border-radius: 4px;
-    margin: 0 10px;
-    font-size: 13px;
-  }
-  #title {
-    font-family: 'Righteous', cursive;
-    color: black;
+.append-buttons a {
+  display: inline-block;
+  border: 1px solid #007aff;
+  color: #007aff;
+  text-decoration: none;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin: 0 10px;
+  font-size: 13px;
+}
+#title {
+  font-family: 'Righteous', cursive;
+  color: black;
 
+}
+footer{
+  width: auto;
+  height: 10%;  
+  background-color: black;
+  margin-top: 25px;
+}
+.swiper-container {
+  height: 720px;
+  text-align: center;
+  background-color: black;
+ }
+
+
+<<<<<<< HEAD
   }
   footer{
     width: auto;
@@ -83,3 +99,5 @@ body {
     width: 20px;
 }
 
+=======
+>>>>>>> 84e56846ae599bd8e17bfc61d8160b6514aa4926
