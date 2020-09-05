@@ -75,7 +75,7 @@ function pull() {
 				url: queryURL,
 				method: "GET"
 			}).then(function (responseOMDB) {
-				console.log(responseOMDB);
+				// console.log(responseOMDB);
 				var responseLength = responseOMDB.length;
 				//create variables for the information recieved from ajax request
 				var MPAArating = responseOMDB.Rated;
@@ -86,12 +86,12 @@ function pull() {
 				//create containers to house the information holding variables above
 				var boxMPAA = $('<p>');
 				var boxOriginCountry = $('<p>');
-				var boxCriticRating = $('<p>');
+				var boxCriticRating = $('<div>');
 
 				//adding information recieved to the containers that were created above
 				boxMPAA.text('MPAA Rating: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
-				boxCriticRating.text('Critic Rating: ' + criticRating);
+				// boxCriticRating.text('Critic Rating: ' + criticRating);
 
 				//appending smaller containers houseing info to the main container displayed in the carousel
 				movieCardDiv.append(boxMPAA);
@@ -99,15 +99,52 @@ function pull() {
 				movieCardDiv.append(boxCriticRating);
 				runtimeDiv.append(runtimeOMDB); // not sure if needed or a way to not display if result is N/A
 
-				// console.log(responseOMDB);
+				console.log(responseOMDB);
 				// console.log(criticRating);
 				// console.log(originCountry);
 				for(var i = 0; i < criticRating.length; i++) {
 					var ratingDiv = $('<div>');
 					var criticResponse = responseOMDB.Ratings[i];
-					ratingDiv.text("Rating Div: " + criticResponse)
+					var ratingSource = criticResponse.Source;
+					var ratingValue = criticResponse.Value
+					// console.log('criticResponse', '---------', criticResponse);
+					ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
+					if (criticRating[i].Source==="Internet Movie Database"){
+						var imdbIcon = $("<img>")
+						imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("ratingIcon");
+						
+						
+                        var imdbNode = $("<div>").text(`${imdbIcon} : ${criticRating[i].Value}`);
+                        // boxCriticRating.append(imdbNode);
+                        boxCriticRating.append(imdbIcon);
+                    } else if(criticRating[i].Source==="Rotten Tomatoes"){
+                        // repeat w RT
+                        console.log("I hit Rotten Tomatoes")
+                    }else if(criticRating[i].Source==="Metacritic"){
+                        // repeat w MC
+                        console.log("I hit MetaCritic")
+                    }
+					//original line
+					//ratingDiv.text("Rating div: " + JSON.stringify(criticResponse));
 					movieCardDiv.append(ratingDiv);
 				}
+
+				// for (var i = 0; i < 3; i++){
+				// 	console.log(criticRating[i].Source)
+					
+                //     if (criticRating[i].Source==="Internet Movie Database"){
+                //         var imdbIcon = $("<img>").attr("src", "./assets/img/imd_logo.jpeg")
+                //             .addClass("ratingIcon");
+                //         var imdbNode = $("<div>").text(`${imdbIcon} : ${criticRating[i].Value}`);
+                //         boxCriticRating.append(imdbNode);
+                //     } else if(criticRating[i].Source==="Rotten Tomatoes"){
+                //         // repeat w RT
+                //         console.log("I hit Rotten Tomatoes")
+                //     }else if(criticRating[i].Source==="Metacritic"){
+                //         // repeat w MC
+                //         console.log("I hit MetaCritic")
+                //     }
+                // }
 
 				//creating swiper carousel 
 				var appendNumber = 600;
@@ -217,3 +254,44 @@ function pull() {
 //Calling pull function the start the ajax requests above
 
 pull();
+
+
+// const friends = [
+// 	{
+// 		name: 'Jane Doe',
+// 		likes: ['Ice Cream', 'puppies', 'sunshine', ['baseball', 'soccer', 'jai alai']]
+// 	},
+// 	{
+// 		name: 'John Doe',
+// 		likes: ['soft serve', 'cats', 'overcast']
+// 	},{
+// 		name: 'Jax Doe',
+// 		likes: ['frozen yogurt', 'goldfish', ['beer pong', 'frisbee golf', 'pumpkin racing']]
+// 	}
+
+// ]
+
+
+// for(let i = 0; i < friends.length; i++){
+// 		const currentFriend = friends[i]
+// 		const friendName = currentFriend.name
+// 		const friendLikes = currentFriend.likes
+// 		let returnString = `${friendName} likes`
+
+// 	for(let j = 0; j < friendLikes.length; j++){
+// 		if(Array.isArray(friendLikes[j])){
+// 			returnString += ` their favorite sports are `
+// 			for(let k = 0; k < friendLikes[j].length; k++){
+// 				returnString += ` ${friendLikes[j][k]}`
+// 			}
+// 		} else {
+// 			if(j === friendLikes.length - 1) {
+// 				returnString += ` & ${friendLikes[j]} `
+// 			} else {
+// 				returnString += ` ${friendLikes[j]} `
+// 			}
+// 		}
+// 	}
+	 
+// 	console.log('----------',returnString)
+// }
