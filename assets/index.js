@@ -153,6 +153,7 @@ function pull() {
 						var imdbNodeText = criticRating[i].Value;
 						boxCriticRating.append(imdbNode);
 						imdbNode.append(imdbNodeText);
+						imdbNode.attr('class', 'uk-column-1-3');
 					} 
 					else if (criticRating[i].Source === "Rotten Tomatoes") {
 						var rottenTomIcon = $('<img>');
@@ -161,6 +162,7 @@ function pull() {
 						var tomatoNodeText = criticRating[i].Value;
 						boxCriticRating.append(tomatoNode);
 						tomatoNode.append(tomatoNodeText);
+						tomatoNode.attr('class', 'uk-column-1-3');
 					} 
 					else if (criticRating[i].Source === "Metacritic") {
 						var metaIcon = $('<img>');
@@ -169,7 +171,7 @@ function pull() {
 						var metaNodeText = criticRating[i].Value;
 						boxCriticRating.append(metaNode);
 						metaNode.append(metaNodeText);
-						console.log("I hit MetaCritic")
+						metaNode.attr('class', 'uk-column-1-3');
 					}
 					movieCardDiv.append(ratingDiv);
 				}
@@ -315,6 +317,7 @@ function pull() {
 						var imdbNodeText = criticRating[i].Value;
 						boxCriticRating.append(imdbNode);
 						imdbNode.append(imdbNodeText);
+						imdbNode.attr('class', 'uk-column-1-3');
 					} 
 					else if (criticRating[i].Source === "Rotten Tomatoes") {
 						var rottenTomIcon = $('<img>');
@@ -323,6 +326,7 @@ function pull() {
 						var tomatoNodeText = criticRating[i].Value;
 						boxCriticRating.append(tomatoNode);
 						tomatoNode.append(tomatoNodeText);
+						tomatoNode.attr('class', 'uk-column-1-3');
 					} 
 					else if (criticRating[i].Source === "Metacritic") {
 						var metaIcon = $('<img>');
@@ -331,7 +335,7 @@ function pull() {
 						var metaNodeText = criticRating[i].Value;
 						boxCriticRating.append(metaNode);
 						metaNode.append(metaNodeText);
-						console.log("I hit MetaCritic")
+						metaNode.attr('class', 'uk-column-1-3');
 					}
 					movieCardDiv.append(ratingDiv);
 				}
