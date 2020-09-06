@@ -1,14 +1,7 @@
-// // Set API in carousel
-// // Function that calls 2nd API so both can occupy same carousel
-// // Set array to carousel
-// // Scope API and determine additional functionality 
-// // create for loop to create x number of cards to populate
-// // Display synopsis and critical data (RT, IMDb) below when image clicked
-
 // Variables that hold our AJAX request information 
-let savedcards = [] 
+let savedcards = []
 savedcards = JSON.parse(localStorage.getItem("movieCardList"))
-console.log(savedcards)
+// console.log(savedcards)
 var newSettings = {
 	"async": true,
 	"crossDomain": true,
@@ -31,68 +24,81 @@ var expireSettings = {
 	}
 }
 
-
 // pull function houses both ajax request
 function pull() {
 	//ajax request for Netflix Information
 	$.ajax(newSettings).done(function (newResponse) {
 		//card that holds all appended information from unogs ajax request
-		var cardBox = $('#swiper-wrapper');
+		var cardBox = $('#swiper-wrapper-coming');
 		//variable that takes slice of ajax info from index 0 to 99
 		var arraySlice = newResponse.ITEMS.slice(0, 99)
-		
-		//  save card active
-		 var arraySlice 
-		
-		 arraySlice.forEach(function (currentElement, index, array) {
-			// console.log(currentElement);
-			// console.log(currentElement.title);
-			// console.log(newResponse.ITEMS);
 
+		//  save card active
+		var arraySlice
+
+		arraySlice.forEach(function (currentElement, index, array) {
 			//create containers to hold information being returned
 			var movieCardDiv = $('<div>');
+			var dropDownContainer = $('<div>');
+			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
 			var runtimeDiv = $('<p>');
 			var synopsisDiv = $('<p>');
 			var imageDiv = $('<img>');
 			var movieTitle = currentElement.title;
+
 			let savebtn = $('<button>');
-		
+			let breaks = $('<br>');
+			let moreBtn = $('<button>');
+			const apostrophe = /&#39/gi;
+			var saveIcon = $('<i>');
+
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
 			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
-			titleDiv.text('Title: ' + currentElement.title);
+			titleDiv.text('Title: ' + currentElement.title); //
+			// titleDiv.replace(apostrophe, "'");
 			// console.log(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
 			runtimeDiv.text("Runtime: " + currentElement.runtime);
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
 
+			dropDownContainer.attr('class', 'uk-inline')
+			dropDownDiv.attr('uk-drop', 'mode: click; pos: bottom-center');
+			moreBtn.attr('type', 'button');
+			moreBtn.text('More Info');
+			saveIcon.attr('uk-icon', 'floppy-o');
+
 			// appending containers housing info from ajax request to one container, then append that container to the carousel container swiper-wrapper
 			movieCardDiv.append(imageDiv);
 			movieCardDiv.append(titleDiv);
-			movieCardDiv.append(typeDiv);
-			movieCardDiv.append(runtimeDiv);
 			movieCardDiv.append(synopsisDiv);
-			cardBox.append(movieCardDiv);
-			movieCardDiv.append(savebtn)
 
+			dropDownContainer.append(moreBtn);
+			dropDownContainer.append(dropDownDiv);
+			dropDownDiv.append(typeDiv);
+			dropDownDiv.append(runtimeDiv);
+			cardBox.append(movieCardDiv);
+
+			savebtn.append(saveIcon);
+			movieCardDiv.append(savebtn);
+			movieCardDiv.append(breaks);
+			movieCardDiv.append(dropDownContainer);
 			// step one make btn
 
-		
-			savebtn.text('Save')
+			savebtn.text('Save');
 			$(savebtn).on("click", function () {
-				
-				
-				if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)){
+
+
+				if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)) {
 					savedcards.push(currentElement)
 				}
-				
 				// get text from wawa 
 				// text area is saved in local storage
-				
-				localStorage.setItem("movieCardList",JSON.stringify (savedcards))
+
+				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
 			})
 			// data is retreved and displayed in textarea
 
@@ -125,57 +131,48 @@ function pull() {
 				// boxCriticRating.text('Critic Rating: ' + criticRating);
 
 				//appending smaller containers houseing info to the main container displayed in the carousel
-				movieCardDiv.append(boxMPAA);
-				movieCardDiv.append(boxOriginCountry);
+				dropDownDiv.append(boxMPAA);
+				dropDownDiv.append(boxOriginCountry);
 				movieCardDiv.append(boxCriticRating);
-				runtimeDiv.append(runtimeOMDB); // not sure if needed or a way to not display if result is N/A
+				//runtimeDiv.append(runtimeOMDB); // not sure if needed or a way to not display if result is N/A
 
-				console.log(responseOMDB);
+				// console.log(responseOMDB);
 				// console.log(criticRating);
 				// console.log(originCountry);
-				for(var i = 0; i < criticRating.length; i++) {
+				for (var i = 0; i < criticRating.length; i++) {
 					var ratingDiv = $('<div>');
 					var criticResponse = responseOMDB.Ratings[i];
-					var ratingSource = criticResponse.Source;
-					var ratingValue = criticResponse.Value
+					//var ratingSource = criticResponse.Source;
+					//var ratingValue = criticResponse.Value
 					// console.log('criticResponse', '---------', criticResponse);
-					ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
-					if (criticRating[i].Source==="Internet Movie Database"){
-						var imdbIcon = $("<img>")
-						imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("ratingIcon");
-						
-						
-                        var imdbNode = $("<div>").text(`${imdbIcon} : ${criticRating[i].Value}`);
-                        // boxCriticRating.append(imdbNode);
-                        boxCriticRating.append(imdbIcon);
-                    } else if(criticRating[i].Source==="Rotten Tomatoes"){
-                        // repeat w RT
-                        console.log("I hit Rotten Tomatoes")
-                    }else if(criticRating[i].Source==="Metacritic"){
-                        // repeat w MC
-                        console.log("I hit MetaCritic")
-                    }
-					//original line
-					//ratingDiv.text("Rating div: " + JSON.stringify(criticResponse));
+					//ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
+					if (criticRating[i].Source === "Internet Movie Database") {
+						var imdbIcon = $("<img>");
+						imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("IMDBIcon");
+						var imdbNode = $("<div>").html(imdbIcon);
+						var imdbNodeText = criticRating[i].Value;
+						boxCriticRating.append(imdbNode);
+						imdbNode.append(imdbNodeText);
+					} 
+					else if (criticRating[i].Source === "Rotten Tomatoes") {
+						var rottenTomIcon = $('<img>');
+						rottenTomIcon.attr('src', './assets/IMG/tomato.png').addClass('RTIcon')
+						var tomatoNode = $('<div>').html(rottenTomIcon);
+						var tomatoNodeText = criticRating[i].Value;
+						boxCriticRating.append(tomatoNode);
+						tomatoNode.append(tomatoNodeText);
+					} 
+					else if (criticRating[i].Source === "Metacritic") {
+						var metaIcon = $('<img>');
+						metaIcon.attr('src', './assets/IMG/metacritic.png').addClass("metaIcon");
+						var metaNode = $('<div>').html(metaIcon);
+						var metaNodeText = criticRating[i].Value;
+						boxCriticRating.append(metaNode);
+						metaNode.append(metaNodeText);
+						console.log("I hit MetaCritic")
+					}
 					movieCardDiv.append(ratingDiv);
 				}
-
-				// for (var i = 0; i < 3; i++){
-				// 	console.log(criticRating[i].Source)
-					
-                //     if (criticRating[i].Source==="Internet Movie Database"){
-                //         var imdbIcon = $("<img>").attr("src", "./assets/img/imd_logo.jpeg")
-                //             .addClass("ratingIcon");
-                //         var imdbNode = $("<div>").text(`${imdbIcon} : ${criticRating[i].Value}`);
-                //         boxCriticRating.append(imdbNode);
-                //     } else if(criticRating[i].Source==="Rotten Tomatoes"){
-                //         // repeat w RT
-                //         console.log("I hit Rotten Tomatoes")
-                //     }else if(criticRating[i].Source==="Metacritic"){
-                //         // repeat w MC
-                //         console.log("I hit MetaCritic")
-                //     }
-                // }
 
 				//creating swiper carousel 
 				var appendNumber = 600;
@@ -192,15 +189,7 @@ function pull() {
 						nextEl: '.swiper-button-next',
 						prevEl: '.swiper-button-prev',
 					},
-					// virtual: {
-					// 	slides: (function () {
-					// 		var slides = [];
-					// 		for (var i = 0; i < 600; i += 1) {
-					// 			slides.push('Slide ' + (i + 1));
-					// 		}
-					// 		return slides;
-					// 	}()),
-					// },
+					
 				});
 				document.querySelector('.slide-1').addEventListener('click', function (e) {
 					e.preventDefault();
@@ -221,108 +210,164 @@ function pull() {
 
 	//2nd AJAx REquest that pulls netflix movies that are leaving. Same as the entire block of code above
 
-	// $.ajax(expireSettings).done(function (expireResponse) {
-	// 	// console.log(expireResponse);
-	// 	var cardBox = $('#going-card-box');
-	// 	var arraySlice = expireResponse.ITEMS.slice(0, 10)
-	// 	arraySlice.forEach(function (currentElement, index, array) {
-	// 		// console.log(currentElement);
-	// 		// console.log(currentElement.title);
-	// 		// console.log(newResponse.ITEMS);
-	// 		var movieCardDiv = $('<div>');
-	// 		var titleDiv = $('<h3>');
-	// 		var typeDiv = $('<p>');
-	// 		var runtimeDiv = $('<p>');
-	// 		var synopsisDiv = $('<p>');
-	// 		var imageDiv = $('<img>');
-	// 		var movieTitle = currentElement.title
+	$.ajax(expireSettings).done(function (expireResponse) {
+		// console.log(expireResponse);
+		var cardBox = $('#swiper-wrapper-going');
+		var arraySlice = expireResponse.ITEMS.slice(0, 10)
+		arraySlice.forEach(function (currentElement, index, array) {
+			// console.log(currentElement);
+			// console.log(currentElement.title);
+			// console.log(newResponse.ITEMS);
+			var movieCardDiv = $('<div>');
+			var dropDownContainer = $('<div>');
+			var dropDownDiv = $('<div>');
+			var titleDiv = $('<h3>');
+			var typeDiv = $('<p>');
+			var runtimeDiv = $('<p>');
+			var synopsisDiv = $('<p>');
+			var imageDiv = $('<img>');
+			var movieTitle = currentElement.title
+
+			let savebtn = $('<button>');
+			let breaks = $('<br>');
+			let moreBtn = $('<button>');
+
+			movieCardDiv.attr('class', 'swiper-slide uk-card uk-card-default uk-card-body');
+			titleDiv.text('Title: ' + currentElement.title);
+			// console.log(currentElement.title);
+			typeDiv.text('Type: ' + currentElement.type);
+			runtimeDiv.text("Runtime: " + currentElement.runtime);
+			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
+			imageDiv.attr('src', currentElement.image);
+
+			dropDownContainer.attr('class', 'uk-inline')
+			dropDownDiv.attr('uk-drop', 'mode: click; pos: bottom-center');
+			moreBtn.attr('type', 'button');
+			moreBtn.text('More Info')
+
+			movieCardDiv.append(imageDiv);
+			movieCardDiv.append(titleDiv);
+			movieCardDiv.append(synopsisDiv);
+
+			dropDownContainer.append(moreBtn);
+			dropDownContainer.append(dropDownDiv);
+
+			dropDownDiv.append(typeDiv);
+			//movieCardDiv.append(typeDiv);
+			dropDownDiv.append(runtimeDiv);
+			cardBox.append(movieCardDiv);
+
+			movieCardDiv.append(savebtn)
+			movieCardDiv.append(breaks);
+			movieCardDiv.append(dropDownContainer);
+			// step one make btn
 
 
-	// 		movieCardDiv.attr('class', 'uk-placeholder uk-text-center');
-	// 		titleDiv.text('Title: ' + currentElement.title);
-	// 		// console.log(currentElement.title);
-	// 		typeDiv.text('Type: ' + currentElement.type);
-	// 		runtimeDiv.text("Runtime: " + currentElement.runtime);
-	// 		synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
-	// 		imageDiv.attr('src', currentElement.image);
+			savebtn.text('Save')
+			$(savebtn).on("click", function () {
 
-	// 		movieCardDiv.append(imageDiv);
-	// 		movieCardDiv.append(titleDiv);
-	// 		movieCardDiv.append(typeDiv);
-	// 		movieCardDiv.append(runtimeDiv);
-	// 		movieCardDiv.append(synopsisDiv);
-	// 		cardBox.append(movieCardDiv);
 
-	// 		var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
-	// 		$.ajax({
-	// 			url: queryURL,
-	// 			method: "GET"
-	// 		}).then(function (responseOMDB) {
-	// 			var MPAArating = responseOMDB.Rated;
-	// 			var originCountry = responseOMDB.Country;
-	// 			var criticRating = responseOMDB.Ratings
+				if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)) {
+					savedcards.push(currentElement)
+				}
 
-	// 			var boxMPAA = $('<p>');
-	// 			var boxOriginCountry = $('<p>');
-	// 			var boxCriticRating = $('<p>');
+				// get text from wawa 
+				// text area is saved in local storage
 
-	// 			boxMPAA.text('Rated: ' + MPAArating);
-	// 			boxOriginCountry.text('Country: ' + originCountry);
-	// 			boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
+				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
+			})
 
-	// 			movieCardDiv.append(boxMPAA);
-	// 			movieCardDiv.append(boxOriginCountry);
-	// 			movieCardDiv.append(boxCriticRating);
+			var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
+			$.ajax({
+				url: queryURL,
+				method: "GET"
+			}).then(function (responseOMDB) {
+				var MPAArating = responseOMDB.Rated;
+				var originCountry = responseOMDB.Country;
+				var criticRating = responseOMDB.Ratings
 
-	// 			console.log(responseOMDB);
-	// 			console.log(criticRating);
-	// 			console.log(originCountry);
-	// 		});
-	// 	});
-	// });
+				var boxMPAA = $('<p>');
+				var boxOriginCountry = $('<p>');
+				var boxCriticRating = $('<div>');
+
+				boxMPAA.text('Rated: ' + MPAArating);
+				boxOriginCountry.text('Country: ' + originCountry);
+				//boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
+
+				dropDownDiv.append(boxMPAA);
+				dropDownDiv.append(boxOriginCountry);
+				movieCardDiv.append(boxCriticRating);
+
+				// console.log(responseOMDB);
+				// console.log(criticRating);
+				// console.log(originCountry);
+				for (var i = 0; i < criticRating.length; i++) {
+					var ratingDiv = $('<div>');
+					var criticResponse = responseOMDB.Ratings[i];
+					//var ratingSource = criticResponse.Source;
+					//var ratingValue = criticResponse.Value
+					// console.log('criticResponse', '---------', criticResponse);
+					//ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
+					if (criticRating[i].Source === "Internet Movie Database") {
+						var imdbIcon = $("<img>");
+						imdbIcon.attr("src", "./IMG/imdb_logo.jpeg").addClass("IMDBIcon");
+						var imdbNode = $("<div>").html(imdbIcon);
+						var imdbNodeText = criticRating[i].Value;
+						boxCriticRating.append(imdbNode);
+						imdbNode.append(imdbNodeText);
+					} 
+					else if (criticRating[i].Source === "Rotten Tomatoes") {
+						var rottenTomIcon = $('<img>');
+						rottenTomIcon.attr('src', './IMG/tomato.png').addClass('RTIcon')
+						var tomatoNode = $('<div>').html(rottenTomIcon);
+						var tomatoNodeText = criticRating[i].Value;
+						boxCriticRating.append(tomatoNode);
+						tomatoNode.append(tomatoNodeText);
+					} 
+					else if (criticRating[i].Source === "Metacritic") {
+						var metaIcon = $('<img>');
+						metaIcon.attr('src', './IMG/metacritic.png').addClass("metaIcon");
+						var metaNode = $('<div>').html(metaIcon);
+						var metaNodeText = criticRating[i].Value;
+						boxCriticRating.append(metaNode);
+						metaNode.append(metaNodeText);
+						console.log("I hit MetaCritic")
+					}
+					movieCardDiv.append(ratingDiv);
+				}
+				var appendNumber = 600;
+				var prependNumber = 1;
+				var swiper = new Swiper('.swiper-container', {
+					slidesPerView: 3,
+					centeredSlides: true,
+					spaceBetween: 30,
+					pagination: {
+						el: '.swiper-pagination',
+						type: 'fraction',
+					},
+					navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev',
+					},
+					
+				});
+				document.querySelector('.slide-1').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(0, 0);
+				});
+				document.querySelector('.slide-50').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(49, 0);
+				});
+				document.querySelector('.slide-100').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(99, 0);
+				});
+			});
+		});
+	});
 };
 
 //Calling pull function the start the ajax requests above
 
 pull();
-
-
-// const friends = [
-// 	{
-// 		name: 'Jane Doe',
-// 		likes: ['Ice Cream', 'puppies', 'sunshine', ['baseball', 'soccer', 'jai alai']]
-// 	},
-// 	{
-// 		name: 'John Doe',
-// 		likes: ['soft serve', 'cats', 'overcast']
-// 	},{
-// 		name: 'Jax Doe',
-// 		likes: ['frozen yogurt', 'goldfish', ['beer pong', 'frisbee golf', 'pumpkin racing']]
-// 	}
-
-// ]
-
-
-// for(let i = 0; i < friends.length; i++){
-// 		const currentFriend = friends[i]
-// 		const friendName = currentFriend.name
-// 		const friendLikes = currentFriend.likes
-// 		let returnString = `${friendName} likes`
-
-// 	for(let j = 0; j < friendLikes.length; j++){
-// 		if(Array.isArray(friendLikes[j])){
-// 			returnString += ` their favorite sports are `
-// 			for(let k = 0; k < friendLikes[j].length; k++){
-// 				returnString += ` ${friendLikes[j][k]}`
-// 			}
-// 		} else {
-// 			if(j === friendLikes.length - 1) {
-// 				returnString += ` & ${friendLikes[j]} `
-// 			} else {
-// 				returnString += ` ${friendLikes[j]} `
-// 			}
-// 		}
-// 	}
-	 
-// 	console.log('----------',returnString)
-// }
