@@ -29,7 +29,7 @@ function pull() {
 	//ajax request for Netflix Information
 	$.ajax(newSettings).done(function (newResponse) {
 		//card that holds all appended information from unogs ajax request
-		var cardBox = $('#swiper-wrapper');
+		var cardBox = $('#swiper-wrapper-coming');
 		//variable that takes slice of ajax info from index 0 to 99
 		var arraySlice = newResponse.ITEMS.slice(0, 99)
 
@@ -210,164 +210,164 @@ function pull() {
 
 	//2nd AJAx REquest that pulls netflix movies that are leaving. Same as the entire block of code above
 
-	// $.ajax(expireSettings).done(function (expireResponse) {
-	// 	// console.log(expireResponse);
-	// 	var cardBox = $('#going-card-box');
-	// 	var arraySlice = expireResponse.ITEMS.slice(0, 10)
-	// 	arraySlice.forEach(function (currentElement, index, array) {
-	// 		// console.log(currentElement);
-	// 		// console.log(currentElement.title);
-	// 		// console.log(newResponse.ITEMS);
-	// 		var movieCardDiv = $('<div>');
-	// 		var dropDownContainer = $('<div>');
-	// 		var dropDownDiv = $('<div>');
-	// 		var titleDiv = $('<h3>');
-	// 		var typeDiv = $('<p>');
-	// 		var runtimeDiv = $('<p>');
-	// 		var synopsisDiv = $('<p>');
-	// 		var imageDiv = $('<img>');
-	// 		var movieTitle = currentElement.title
+	$.ajax(expireSettings).done(function (expireResponse) {
+		// console.log(expireResponse);
+		var cardBox = $('#swiper-wrapper-going');
+		var arraySlice = expireResponse.ITEMS.slice(0, 10)
+		arraySlice.forEach(function (currentElement, index, array) {
+			// console.log(currentElement);
+			// console.log(currentElement.title);
+			// console.log(newResponse.ITEMS);
+			var movieCardDiv = $('<div>');
+			var dropDownContainer = $('<div>');
+			var dropDownDiv = $('<div>');
+			var titleDiv = $('<h3>');
+			var typeDiv = $('<p>');
+			var runtimeDiv = $('<p>');
+			var synopsisDiv = $('<p>');
+			var imageDiv = $('<img>');
+			var movieTitle = currentElement.title
 
-	// 		let savebtn = $('<button>');
-	// 		let breaks = $('<br>');
-	// 		let moreBtn = $('<button>');
+			let savebtn = $('<button>');
+			let breaks = $('<br>');
+			let moreBtn = $('<button>');
 
-	// 		movieCardDiv.attr('class', 'swiper-slide uk-card uk-card-default uk-card-body');
-	// 		titleDiv.text('Title: ' + currentElement.title);
-	// 		// console.log(currentElement.title);
-	// 		typeDiv.text('Type: ' + currentElement.type);
-	// 		runtimeDiv.text("Runtime: " + currentElement.runtime);
-	// 		synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
-	// 		imageDiv.attr('src', currentElement.image);
+			movieCardDiv.attr('class', 'swiper-slide uk-card uk-card-default uk-card-body');
+			titleDiv.text('Title: ' + currentElement.title);
+			// console.log(currentElement.title);
+			typeDiv.text('Type: ' + currentElement.type);
+			runtimeDiv.text("Runtime: " + currentElement.runtime);
+			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
+			imageDiv.attr('src', currentElement.image);
 
-	// 		dropDownContainer.attr('class', 'uk-inline')
-	// 		dropDownDiv.attr('uk-drop', 'mode: click; pos: bottom-center');
-	// 		moreBtn.attr('type', 'button');
-	// 		moreBtn.text('More Info')
+			dropDownContainer.attr('class', 'uk-inline')
+			dropDownDiv.attr('uk-drop', 'mode: click; pos: bottom-center');
+			moreBtn.attr('type', 'button');
+			moreBtn.text('More Info')
 
-	// 		movieCardDiv.append(imageDiv);
-	// 		movieCardDiv.append(titleDiv);
-	// 		movieCardDiv.append(synopsisDiv);
+			movieCardDiv.append(imageDiv);
+			movieCardDiv.append(titleDiv);
+			movieCardDiv.append(synopsisDiv);
 
-	// 		dropDownContainer.append(moreBtn);
-	// 		dropDownContainer.append(dropDownDiv);
+			dropDownContainer.append(moreBtn);
+			dropDownContainer.append(dropDownDiv);
 
-	// 		dropDownDiv.append(typeDiv);
-	// 		//movieCardDiv.append(typeDiv);
-	// 		movieCardDiv.append(runtimeDiv);
-	// 		cardBox.append(movieCardDiv);
+			dropDownDiv.append(typeDiv);
+			//movieCardDiv.append(typeDiv);
+			dropDownDiv.append(runtimeDiv);
+			cardBox.append(movieCardDiv);
 
-	// 		movieCardDiv.append(savebtn)
-	// 		movieCardDiv.append(breaks);
-	// 		movieCardDiv.append(dropDownContainer);
-	// 		// step one make btn
-
-
-	// 		savebtn.text('Save')
-	// 		$(savebtn).on("click", function () {
+			movieCardDiv.append(savebtn)
+			movieCardDiv.append(breaks);
+			movieCardDiv.append(dropDownContainer);
+			// step one make btn
 
 
-	// 			if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)) {
-	// 				savedcards.push(currentElement)
-	// 			}
+			savebtn.text('Save')
+			$(savebtn).on("click", function () {
 
-	// 			// get text from wawa 
-	// 			// text area is saved in local storage
 
-	// 			localStorage.setItem("movieCardList", JSON.stringify(savedcards))
-	// 		})
+				if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)) {
+					savedcards.push(currentElement)
+				}
 
-	// 		var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
-	// 		$.ajax({
-	// 			url: queryURL,
-	// 			method: "GET"
-	// 		}).then(function (responseOMDB) {
-	// 			var MPAArating = responseOMDB.Rated;
-	// 			var originCountry = responseOMDB.Country;
-	// 			var criticRating = responseOMDB.Ratings
+				// get text from wawa 
+				// text area is saved in local storage
 
-	// 			var boxMPAA = $('<p>');
-	// 			var boxOriginCountry = $('<p>');
-	// 			var boxCriticRating = $('<p>');
+				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
+			})
 
-	// 			boxMPAA.text('Rated: ' + MPAArating);
-	// 			boxOriginCountry.text('Country: ' + originCountry);
-	// 			boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
+			var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
+			$.ajax({
+				url: queryURL,
+				method: "GET"
+			}).then(function (responseOMDB) {
+				var MPAArating = responseOMDB.Rated;
+				var originCountry = responseOMDB.Country;
+				var criticRating = responseOMDB.Ratings
 
-	// 			movieCardDiv.append(boxMPAA);
-	// 			movieCardDiv.append(boxOriginCountry);
-	// 			movieCardDiv.append(boxCriticRating);
+				var boxMPAA = $('<p>');
+				var boxOriginCountry = $('<p>');
+				var boxCriticRating = $('<div>');
 
-	// 			// console.log(responseOMDB);
-	// 			// console.log(criticRating);
-	// 			// console.log(originCountry);
-	// 			for (var i = 0; i < criticRating.length; i++) {
-	// 				var ratingDiv = $('<div>');
-	// 				var criticResponse = responseOMDB.Ratings[i];
-	// 				//var ratingSource = criticResponse.Source;
-	// 				//var ratingValue = criticResponse.Value
-	// 				// console.log('criticResponse', '---------', criticResponse);
-	// 				//ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
-	// 				if (criticRating[i].Source === "Internet Movie Database") {
-	// 					var imdbIcon = $("<img>");
-	// 					imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("IMDBIcon");
-	// 					var imdbNode = $("<div>").html(imdbIcon);
-	// 					var imdbNodeText = criticRating[i].Value;
-	// 					boxCriticRating.append(imdbNode);
-	// 					imdbNode.append(imdbNodeText);
-	// 				} 
-	// 				else if (criticRating[i].Source === "Rotten Tomatoes") {
-	// 					var rottenTomIcon = $('<img>');
-	// 					rottenTomIcon.attr('src', './assets/IMG/tomato.png').addClass('RTIcon')
-	// 					var tomatoNode = $('<div>').html(rottenTomIcon);
-	// 					var tomatoNodeText = criticRating[i].Value;
-	// 					boxCriticRating.append(tomatoNode);
-	// 					tomatoNode.append(tomatoNodeText);
-	// 				} 
-	// 				else if (criticRating[i].Source === "Metacritic") {
-	// 					var metaIcon = $('<img>');
-	// 					metaIcon.attr('src', './assets/IMG/metacritic.png').addClass("metaIcon");
-	// 					var metaNode = $('<div>').html(metaIcon);
-	// 					var metaNodeText = criticRating[i].Value;
-	// 					boxCriticRating.append(metaNode);
-	// 					metaNode.append(metaNodeText);
-	// 					console.log("I hit MetaCritic")
-	// 				}
-	// 				movieCardDiv.append(ratingDiv);
-	// 			}
-	// 			var appendNumber = 600;
-	// 			var prependNumber = 1;
-	// 			var swiper = new Swiper('.swiper-container', {
-	// 				slidesPerView: 3,
-	// 				centeredSlides: true,
-	// 				spaceBetween: 30,
-	// 				pagination: {
-	// 					el: '.swiper-pagination',
-	// 					type: 'fraction',
-	// 				},
-	// 				navigation: {
-	// 					nextEl: '.swiper-button-next',
-	// 					prevEl: '.swiper-button-prev',
-	// 				},
+				boxMPAA.text('Rated: ' + MPAArating);
+				boxOriginCountry.text('Country: ' + originCountry);
+				//boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
+
+				dropDownDiv.append(boxMPAA);
+				dropDownDiv.append(boxOriginCountry);
+				movieCardDiv.append(boxCriticRating);
+
+				// console.log(responseOMDB);
+				// console.log(criticRating);
+				// console.log(originCountry);
+				for (var i = 0; i < criticRating.length; i++) {
+					var ratingDiv = $('<div>');
+					var criticResponse = responseOMDB.Ratings[i];
+					//var ratingSource = criticResponse.Source;
+					//var ratingValue = criticResponse.Value
+					// console.log('criticResponse', '---------', criticResponse);
+					//ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
+					if (criticRating[i].Source === "Internet Movie Database") {
+						var imdbIcon = $("<img>");
+						imdbIcon.attr("src", "./IMG/imdb_logo.jpeg").addClass("IMDBIcon");
+						var imdbNode = $("<div>").html(imdbIcon);
+						var imdbNodeText = criticRating[i].Value;
+						boxCriticRating.append(imdbNode);
+						imdbNode.append(imdbNodeText);
+					} 
+					else if (criticRating[i].Source === "Rotten Tomatoes") {
+						var rottenTomIcon = $('<img>');
+						rottenTomIcon.attr('src', './IMG/tomato.png').addClass('RTIcon')
+						var tomatoNode = $('<div>').html(rottenTomIcon);
+						var tomatoNodeText = criticRating[i].Value;
+						boxCriticRating.append(tomatoNode);
+						tomatoNode.append(tomatoNodeText);
+					} 
+					else if (criticRating[i].Source === "Metacritic") {
+						var metaIcon = $('<img>');
+						metaIcon.attr('src', './IMG/metacritic.png').addClass("metaIcon");
+						var metaNode = $('<div>').html(metaIcon);
+						var metaNodeText = criticRating[i].Value;
+						boxCriticRating.append(metaNode);
+						metaNode.append(metaNodeText);
+						console.log("I hit MetaCritic")
+					}
+					movieCardDiv.append(ratingDiv);
+				}
+				var appendNumber = 600;
+				var prependNumber = 1;
+				var swiper = new Swiper('.swiper-container', {
+					slidesPerView: 3,
+					centeredSlides: true,
+					spaceBetween: 30,
+					pagination: {
+						el: '.swiper-pagination',
+						type: 'fraction',
+					},
+					navigation: {
+						nextEl: '.swiper-button-next',
+						prevEl: '.swiper-button-prev',
+					},
 					
-	// 			});
-	// 			document.querySelector('.slide-1').addEventListener('click', function (e) {
-	// 				e.preventDefault();
-	// 				swiper.slideTo(0, 0);
-	// 			});
-	// 			document.querySelector('.slide-50').addEventListener('click', function (e) {
-	// 				e.preventDefault();
-	// 				swiper.slideTo(49, 0);
-	// 			});
-	// 			document.querySelector('.slide-100').addEventListener('click', function (e) {
-	// 				e.preventDefault();
-	// 				swiper.slideTo(99, 0);
-	// 			});
-	// 		});
-	// 	});
-	// });
+				});
+				document.querySelector('.slide-1').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(0, 0);
+				});
+				document.querySelector('.slide-50').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(49, 0);
+				});
+				document.querySelector('.slide-100').addEventListener('click', function (e) {
+					e.preventDefault();
+					swiper.slideTo(99, 0);
+				});
+			});
+		});
+	});
 };
 
 //Calling pull function the start the ajax requests above
 
-// pull();
+pull();
