@@ -39,7 +39,7 @@ function pull() {
 		arraySlice.forEach(function (currentElement, index, array) {
 			//create containers to hold information being returned
 			var movieCardDiv = $('<div>');
-			var dropDownContainer = $('<div>');
+			var dropDownContainer = $('<div uk-modal>');
 			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
@@ -65,9 +65,13 @@ function pull() {
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
 
-			dropDownContainer.attr('class', 'uk-inline')
-			dropDownDiv.attr('uk-drop', 'mode: click; pos: bottom-center');
+			//dropDownContainer.attr('class', 'uk-inline')
+			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
+			dropDownContainer.attr('id', 'modal-id');
+			
+			
 			moreBtn.attr('type', 'button');
+			moreBtn.attr('uk-toggle', 'target: #modal-id');
 			moreBtn.text('More Info');
 			saveIcon.attr('uk-icon', 'floppy-o');
 
@@ -76,7 +80,7 @@ function pull() {
 			movieCardDiv.append(titleDiv);
 			movieCardDiv.append(synopsisDiv);
 
-			dropDownContainer.append(moreBtn);
+			
 			dropDownContainer.append(dropDownDiv);
 			dropDownDiv.append(typeDiv);
 			dropDownDiv.append(runtimeDiv);
@@ -85,6 +89,7 @@ function pull() {
 			savebtn.append(saveIcon);
 			movieCardDiv.append(savebtn);
 			movieCardDiv.append(breaks);
+			movieCardDiv.append(moreBtn);
 			movieCardDiv.append(dropDownContainer);
 			// step one make btn
 
