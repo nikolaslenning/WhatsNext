@@ -1,6 +1,6 @@
 // Variables that hold our AJAX request information 
-let savedcards = []
-savedcards = JSON.parse(localStorage.getItem("movieCardList"))
+let savedcards = [];
+savedcards = JSON.parse(localStorage.getItem("movieCardList"));
 // console.log(savedcards)
 var newSettings = {
 	"async": true,
@@ -34,12 +34,13 @@ function pull() {
 		var arraySlice = newResponse.ITEMS.slice(0, 99)
 
 		//  save card active
-		var arraySlice
+		var arraySlice 
 
 		arraySlice.forEach(function (currentElement, index, array) {
 			//create containers to hold information being returned
+			console.log(currentElement);
 			var movieCardDiv = $('<div>');
-			var dropDownContainer = $('<div>');
+			var dropDownContainer = $('<div uk-modal>');
 			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
@@ -51,13 +52,13 @@ function pull() {
 			let savebtn = $('<button>');
 			let breaks = $('<br>');
 			let moreBtn = $('<button>');
-			const apostrophe = /&#39/gi;
-			var saveIcon = $('<i>');
+			//const apostrophe = /&#39/gi;
+			//var saveIcon = $('<i>');
 
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
 			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
-			titleDiv.text('Title: ' + currentElement.title); //
+			titleDiv.text(currentElement.title); //
 			// titleDiv.replace(apostrophe, "'");
 			// console.log(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
@@ -65,28 +66,42 @@ function pull() {
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
 
-			dropDownContainer.attr('class', 'uk-inline')
-			dropDownDiv.attr('uk-drop', 'mode: click; pos: bottom-center');
+			//dropDownContainer.attr('class', 'uk-inline')
+			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
+			dropDownContainer.attr('id', 'modal-id');
+			
+			
 			moreBtn.attr('type', 'button');
+			moreBtn.attr('uk-toggle', 'target: #modal-id');
 			moreBtn.text('More Info');
-			saveIcon.attr('uk-icon', 'floppy-o');
+			//saveIcon.attr('uk-icon', 'floppy-o');
 
 			// appending containers housing info from ajax request to one container, then append that container to the carousel container swiper-wrapper
 			movieCardDiv.append(imageDiv);
 			movieCardDiv.append(titleDiv);
 			movieCardDiv.append(synopsisDiv);
 
-			dropDownContainer.append(moreBtn);
+			
 			dropDownContainer.append(dropDownDiv);
+			dropDownDiv.append(movieTitle);
 			dropDownDiv.append(typeDiv);
 			dropDownDiv.append(runtimeDiv);
 			cardBox.append(movieCardDiv);
 
-			savebtn.append(saveIcon);
+			//savebtn.append(saveIcon);
 			movieCardDiv.append(savebtn);
 			movieCardDiv.append(breaks);
+			movieCardDiv.append(moreBtn);
 			movieCardDiv.append(dropDownContainer);
 			// step one make btn
+			
+			$(moreBtn).on('click', function() {
+				console.log('Clicked' + JSON.stringify(currentElement));
+				if(!currentElement.find(movie => movie.netflixid === currentElement.netflixid)) {
+					return
+				}
+
+			})
 
 			savebtn.text('Save');
 			$(savebtn).on("click", function () {
@@ -153,6 +168,7 @@ function pull() {
 						var imdbNodeText = criticRating[i].Value;
 						boxCriticRating.append(imdbNode);
 						imdbNode.append(imdbNodeText);
+						imdbNode.attr('class', 'uk-column-1-3');
 					} 
 					else if (criticRating[i].Source === "Rotten Tomatoes") {
 						var rottenTomIcon = $('<img>');
@@ -161,6 +177,7 @@ function pull() {
 						var tomatoNodeText = criticRating[i].Value;
 						boxCriticRating.append(tomatoNode);
 						tomatoNode.append(tomatoNodeText);
+						tomatoNode.attr('class', 'uk-column-1-3');
 					} 
 					else if (criticRating[i].Source === "Metacritic") {
 						var metaIcon = $('<img>');
@@ -169,7 +186,7 @@ function pull() {
 						var metaNodeText = criticRating[i].Value;
 						boxCriticRating.append(metaNode);
 						metaNode.append(metaNodeText);
-						console.log("I hit MetaCritic")
+						metaNode.attr('class', 'uk-column-1-3');
 					}
 					movieCardDiv.append(ratingDiv);
 				}
@@ -213,13 +230,14 @@ function pull() {
 	$.ajax(expireSettings).done(function (expireResponse) {
 		// console.log(expireResponse);
 		var cardBox = $('#swiper-wrapper-going');
-		var arraySlice = expireResponse.ITEMS.slice(0, 10)
+		var arraySlice = expireResponse.ITEMS.slice(0, 99)
+
 		arraySlice.forEach(function (currentElement, index, array) {
 			// console.log(currentElement);
 			// console.log(currentElement.title);
 			// console.log(newResponse.ITEMS);
 			var movieCardDiv = $('<div>');
-			var dropDownContainer = $('<div>');
+			var dropDownContainer = $('<div uk-modal>');
 			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
@@ -233,32 +251,35 @@ function pull() {
 			let moreBtn = $('<button>');
 
 			movieCardDiv.attr('class', 'swiper-slide uk-card uk-card-default uk-card-body');
-			titleDiv.text('Title: ' + currentElement.title);
+			titleDiv.text(currentElement.title);
 			// console.log(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
 			runtimeDiv.text("Runtime: " + currentElement.runtime);
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
 
-			dropDownContainer.attr('class', 'uk-inline')
-			dropDownDiv.attr('uk-drop', 'mode: click; pos: bottom-center');
+			//dropDownContainer.attr('class', 'uk-inline')
+			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
+			dropDownContainer.attr('id', 'modal-id');
+
+
 			moreBtn.attr('type', 'button');
 			moreBtn.text('More Info')
+			moreBtn.attr('uk-toggle', 'target: #modal-id');
 
 			movieCardDiv.append(imageDiv);
 			movieCardDiv.append(titleDiv);
 			movieCardDiv.append(synopsisDiv);
 
-			dropDownContainer.append(moreBtn);
 			dropDownContainer.append(dropDownDiv);
-
+			dropDownDiv.append(movieTitle);
 			dropDownDiv.append(typeDiv);
-			//movieCardDiv.append(typeDiv);
 			dropDownDiv.append(runtimeDiv);
 			cardBox.append(movieCardDiv);
-
+			
 			movieCardDiv.append(savebtn)
 			movieCardDiv.append(breaks);
+			movieCardDiv.append(moreBtn);
 			movieCardDiv.append(dropDownContainer);
 			// step one make btn
 
@@ -315,6 +336,7 @@ function pull() {
 						var imdbNodeText = criticRating[i].Value;
 						boxCriticRating.append(imdbNode);
 						imdbNode.append(imdbNodeText);
+						imdbNode.attr('class', 'uk-column-1-3');
 					} 
 					else if (criticRating[i].Source === "Rotten Tomatoes") {
 						var rottenTomIcon = $('<img>');
@@ -323,6 +345,7 @@ function pull() {
 						var tomatoNodeText = criticRating[i].Value;
 						boxCriticRating.append(tomatoNode);
 						tomatoNode.append(tomatoNodeText);
+						tomatoNode.attr('class', 'uk-column-1-3');
 					} 
 					else if (criticRating[i].Source === "Metacritic") {
 						var metaIcon = $('<img>');
@@ -331,7 +354,7 @@ function pull() {
 						var metaNodeText = criticRating[i].Value;
 						boxCriticRating.append(metaNode);
 						metaNode.append(metaNodeText);
-						console.log("I hit MetaCritic")
+						metaNode.attr('class', 'uk-column-1-3');
 					}
 					movieCardDiv.append(ratingDiv);
 				}
