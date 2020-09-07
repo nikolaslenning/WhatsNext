@@ -1,6 +1,6 @@
 // Variables that hold our AJAX request information 
-let savedcards = []
-savedcards = JSON.parse(localStorage.getItem("movieCardList"))
+let savedcards = [];
+savedcards = JSON.parse(localStorage.getItem("movieCardList"));
 // console.log(savedcards)
 var newSettings = {
 	"async": true,
@@ -34,10 +34,11 @@ function pull() {
 		var arraySlice = newResponse.ITEMS.slice(0, 99)
 
 		//  save card active
-		var arraySlice
+		var arraySlice 
 
 		arraySlice.forEach(function (currentElement, index, array) {
 			//create containers to hold information being returned
+			console.log(currentElement);
 			var movieCardDiv = $('<div>');
 			var dropDownContainer = $('<div uk-modal>');
 			var dropDownDiv = $('<div>');
@@ -51,8 +52,8 @@ function pull() {
 			let savebtn = $('<button>');
 			let breaks = $('<br>');
 			let moreBtn = $('<button>');
-			const apostrophe = /&#39/gi;
-			var saveIcon = $('<i>');
+			//const apostrophe = /&#39/gi;
+			//var saveIcon = $('<i>');
 
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
@@ -73,7 +74,7 @@ function pull() {
 			moreBtn.attr('type', 'button');
 			moreBtn.attr('uk-toggle', 'target: #modal-id');
 			moreBtn.text('More Info');
-			saveIcon.attr('uk-icon', 'floppy-o');
+			//saveIcon.attr('uk-icon', 'floppy-o');
 
 			// appending containers housing info from ajax request to one container, then append that container to the carousel container swiper-wrapper
 			movieCardDiv.append(imageDiv);
@@ -82,16 +83,25 @@ function pull() {
 
 			
 			dropDownContainer.append(dropDownDiv);
+			dropDownDiv.append(movieTitle);
 			dropDownDiv.append(typeDiv);
 			dropDownDiv.append(runtimeDiv);
 			cardBox.append(movieCardDiv);
 
-			savebtn.append(saveIcon);
+			//savebtn.append(saveIcon);
 			movieCardDiv.append(savebtn);
 			movieCardDiv.append(breaks);
 			movieCardDiv.append(moreBtn);
 			movieCardDiv.append(dropDownContainer);
 			// step one make btn
+			
+			$(moreBtn).on('click', function() {
+				console.log('Clicked' + JSON.stringify(currentElement));
+				if(!currentElement.find(movie => movie.netflixid === currentElement.netflixid)) {
+					return
+				}
+
+			})
 
 			savebtn.text('Save');
 			$(savebtn).on("click", function () {
@@ -262,6 +272,7 @@ function pull() {
 			movieCardDiv.append(synopsisDiv);
 
 			dropDownContainer.append(dropDownDiv);
+			dropDownDiv.append(movieTitle);
 			dropDownDiv.append(typeDiv);
 			dropDownDiv.append(runtimeDiv);
 			cardBox.append(movieCardDiv);
