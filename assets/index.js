@@ -220,13 +220,14 @@ function pull() {
 	$.ajax(expireSettings).done(function (expireResponse) {
 		// console.log(expireResponse);
 		var cardBox = $('#swiper-wrapper-going');
-		var arraySlice = expireResponse.ITEMS.slice(0, 10)
+		var arraySlice = expireResponse.ITEMS.slice(0, 99)
+
 		arraySlice.forEach(function (currentElement, index, array) {
 			// console.log(currentElement);
 			// console.log(currentElement.title);
 			// console.log(newResponse.ITEMS);
 			var movieCardDiv = $('<div>');
-			var dropDownContainer = $('<div>');
+			var dropDownContainer = $('<div uk-modal>');
 			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
@@ -247,25 +248,27 @@ function pull() {
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
 
-			dropDownContainer.attr('class', 'uk-inline')
-			dropDownDiv.attr('uk-drop', 'mode: click; pos: bottom-center');
+			//dropDownContainer.attr('class', 'uk-inline')
+			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
+			dropDownContainer.attr('id', 'modal-id');
+
+
 			moreBtn.attr('type', 'button');
 			moreBtn.text('More Info')
+			moreBtn.attr('uk-toggle', 'target: #modal-id');
 
 			movieCardDiv.append(imageDiv);
 			movieCardDiv.append(titleDiv);
 			movieCardDiv.append(synopsisDiv);
 
-			dropDownContainer.append(moreBtn);
 			dropDownContainer.append(dropDownDiv);
-
 			dropDownDiv.append(typeDiv);
-			//movieCardDiv.append(typeDiv);
 			dropDownDiv.append(runtimeDiv);
 			cardBox.append(movieCardDiv);
-
+			
 			movieCardDiv.append(savebtn)
 			movieCardDiv.append(breaks);
+			movieCardDiv.append(moreBtn);
 			movieCardDiv.append(dropDownContainer);
 			// step one make btn
 
