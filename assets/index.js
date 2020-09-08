@@ -1,7 +1,7 @@
 // Variables that hold our AJAX request information 
 let savedcards = [];
-savedcards = JSON.parse(localStorage.getItem("movieCardList"));
-// console.log(savedcards)
+
+console.log(savedcards)
 var newSettings = {
 	"async": true,
 	"crossDomain": true,
@@ -32,15 +32,16 @@ function pull() {
 		var cardBox = $('#swiper-wrapper-coming');
 		//variable that takes slice of ajax info from index 0 to 99
 		var arraySlice = newResponse.ITEMS.slice(0, 99)
-
+		console.log(newResponse);
 		//  save card active
-		var arraySlice 
+		//var arraySlice 
 
 		arraySlice.forEach(function (currentElement, index, array) {
+			// console.log(arraySlice);
 			//create containers to hold information being returned
-			console.log(currentElement);
+			// console.log(currentElement);
 			var movieCardDiv = $('<div>');
-			var dropDownContainer = $('<div uk-modal>');
+			//var dropDownContainer = $('<div uk-modal>');
 			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
@@ -67,13 +68,20 @@ function pull() {
 			imageDiv.attr('src', currentElement.image);
 
 			//dropDownContainer.attr('class', 'uk-inline')
-			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
-			dropDownContainer.attr('id', 'modal-id');
+
+			 dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
+			// dropDownContainer.attr('id', 'modal-id');
 			
 			
 			moreBtn.attr('type', 'button');
 			moreBtn.attr('uk-toggle', 'target: #modal-id');
 			moreBtn.text('More Info');
+			moreBtn.attr('data-title', movieTitle);
+			moreBtn.attr('data-netflix-id', currentElement.netflixid);
+			moreBtn.attr('data-runtime', currentElement.runtime);
+			moreBtn.attr('data-type', currentElement.type);
+			moreBtn.attr('data-country', currentElement.runtime);
+		
 			//saveIcon.attr('uk-icon', 'floppy-o');
 
 			// appending containers housing info from ajax request to one container, then append that container to the carousel container swiper-wrapper
@@ -82,38 +90,35 @@ function pull() {
 			movieCardDiv.append(synopsisDiv);
 
 			
-			dropDownContainer.append(dropDownDiv);
-			dropDownDiv.append(movieTitle);
-			dropDownDiv.append(typeDiv);
-			dropDownDiv.append(runtimeDiv);
+			//dropDownContainer.append(dropDownDiv);
+			// dropDownDiv.append(movieTitle);
+			// dropDownDiv.append(typeDiv);
+			// dropDownDiv.append(runtimeDiv);
 			cardBox.append(movieCardDiv);
 
 			//savebtn.append(saveIcon);
 			movieCardDiv.append(savebtn);
 			movieCardDiv.append(breaks);
 			movieCardDiv.append(moreBtn);
-			movieCardDiv.append(dropDownContainer);
+
+			//movieCardDiv.append(dropDownContainer);
 			// step one make btn
 			
-			$(moreBtn).on('click', function() {
-				console.log('Clicked' + JSON.stringify(currentElement));
-				if(!currentElement.find(movie => movie.netflixid === currentElement.netflixid)) {
-					return
-				}
-
-			})
+			
 
 			savebtn.text('Save');
 			$(savebtn).on("click", function () {
 
 
-				if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)) {
+				//if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)) {
 					savedcards.push(currentElement)
-				}
+				//}
 				// get text from wawa 
 				// text area is saved in local storage
 
 				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
+
+				savedcards = JSON.parse(localStorage.getItem("movieCardList"));
 			})
 			// data is retreved and displayed in textarea
 
@@ -127,7 +132,7 @@ function pull() {
 				url: queryURL,
 				method: "GET"
 			}).then(function (responseOMDB) {
-				// console.log(responseOMDB);
+				console.log(responseOMDB);
 				var responseLength = responseOMDB.length;
 				//create variables for the information recieved from ajax request
 				var MPAArating = responseOMDB.Rated;
@@ -221,6 +226,29 @@ function pull() {
 					swiper.slideTo(99, 0);
 				});
 			});
+
+			$(moreBtn).on('click', function(event) {
+				console.log('Clicked' + JSON.stringify(currentElement));
+				//console.dir(currentElement);
+				console.log($(this).attr('data-title'));
+				$('#modal-id').empty();
+				
+				// var dropDownContainer = $('<div uk-modal>');
+				var dropDownDiv = $('<div>');
+				var typeDiv = $('<div>');
+				typeDiv.text($(this).attr('data-type'))
+				var runtimeDiv = $('<div>');
+				runtimeDiv.text($(this).attr('data-runtime'));
+				dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
+				// dropDownContainer.attr('id', 'modal-id');
+				dropDownDiv.append($(this).attr('data-title'));
+				dropDownDiv.append(typeDiv);
+				dropDownDiv.append(runtimeDiv);	
+				$('#modal-id').append(dropDownDiv);
+				
+
+			})
+
 		});
 	});
 
