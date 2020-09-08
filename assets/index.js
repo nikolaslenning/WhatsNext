@@ -1,7 +1,9 @@
 // Variables that hold our AJAX request information 
 let savedcards = [];
 
+
 console.log(savedcards)
+
 var newSettings = {
 	"async": true,
 	"crossDomain": true,
@@ -34,7 +36,7 @@ function pull() {
 		var arraySlice = newResponse.ITEMS.slice(0, 99)
 		console.log(newResponse);
 		//  save card active
-		//var arraySlice 
+
 
 		arraySlice.forEach(function (currentElement, index, array) {
 			// console.log(arraySlice);
@@ -69,10 +71,12 @@ function pull() {
 
 			//dropDownContainer.attr('class', 'uk-inline')
 
+
 			 dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
 			// dropDownContainer.attr('id', 'modal-id');
 			
 			
+
 			moreBtn.attr('type', 'button');
 			moreBtn.attr('uk-toggle', 'target: #modal-id');
 			moreBtn.text('More Info');
@@ -89,11 +93,13 @@ function pull() {
 			movieCardDiv.append(titleDiv);
 			movieCardDiv.append(synopsisDiv);
 
+
 			
 			//dropDownContainer.append(dropDownDiv);
 			// dropDownDiv.append(movieTitle);
 			// dropDownDiv.append(typeDiv);
 			// dropDownDiv.append(runtimeDiv);
+
 			cardBox.append(movieCardDiv);
 
 			//savebtn.append(saveIcon);
@@ -103,22 +109,29 @@ function pull() {
 
 			//movieCardDiv.append(dropDownContainer);
 			// step one make btn
-			
-			
+
 
 			savebtn.text('Save');
 			$(savebtn).on("click", function () {
+				console.log(savebtn)
 
 
-				//if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)) {
-					savedcards.push(currentElement)
-				//}
-				// get text from wawa 
-				// text area is saved in local storage
 
+				//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
+				savedcards.push(currentElement)
+				// }
+
+
+				// 	// // text area is saved in local storage
 				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
 
 				savedcards = JSON.parse(localStorage.getItem("movieCardList"));
+
+				let temp = localStorage.getItem('movieCardList');
+				if (!temp) {
+					temp = movieCardList
+}
+
 			})
 			// data is retreved and displayed in textarea
 
@@ -174,7 +187,7 @@ function pull() {
 						boxCriticRating.append(imdbNode);
 						imdbNode.append(imdbNodeText);
 						imdbNode.attr('class', 'uk-column-1-3');
-					} 
+					}
 					else if (criticRating[i].Source === "Rotten Tomatoes") {
 						var rottenTomIcon = $('<img>');
 						rottenTomIcon.attr('src', './assets/IMG/tomato.png').addClass('RTIcon')
@@ -183,7 +196,7 @@ function pull() {
 						boxCriticRating.append(tomatoNode);
 						tomatoNode.append(tomatoNodeText);
 						tomatoNode.attr('class', 'uk-column-1-3');
-					} 
+					}
 					else if (criticRating[i].Source === "Metacritic") {
 						var metaIcon = $('<img>');
 						metaIcon.attr('src', './assets/IMG/metacritic.png').addClass("metaIcon");
@@ -211,7 +224,7 @@ function pull() {
 						nextEl: '.swiper-button-next',
 						prevEl: '.swiper-button-prev',
 					},
-					
+
 				});
 				document.querySelector('.slide-1').addEventListener('click', function (e) {
 					e.preventDefault();
@@ -304,7 +317,7 @@ function pull() {
 			dropDownDiv.append(typeDiv);
 			dropDownDiv.append(runtimeDiv);
 			cardBox.append(movieCardDiv);
-			
+
 			movieCardDiv.append(savebtn)
 			movieCardDiv.append(breaks);
 			movieCardDiv.append(moreBtn);
@@ -365,7 +378,7 @@ function pull() {
 						boxCriticRating.append(imdbNode);
 						imdbNode.append(imdbNodeText);
 						imdbNode.attr('class', 'uk-column-1-3');
-					} 
+					}
 					else if (criticRating[i].Source === "Rotten Tomatoes") {
 						var rottenTomIcon = $('<img>');
 						rottenTomIcon.attr('src', './IMG/tomato.png').addClass('RTIcon')
@@ -374,7 +387,7 @@ function pull() {
 						boxCriticRating.append(tomatoNode);
 						tomatoNode.append(tomatoNodeText);
 						tomatoNode.attr('class', 'uk-column-1-3');
-					} 
+					}
 					else if (criticRating[i].Source === "Metacritic") {
 						var metaIcon = $('<img>');
 						metaIcon.attr('src', './IMG/metacritic.png').addClass("metaIcon");
@@ -400,7 +413,7 @@ function pull() {
 						nextEl: '.swiper-button-next',
 						prevEl: '.swiper-button-prev',
 					},
-					
+
 				});
 				document.querySelector('.slide-1').addEventListener('click', function (e) {
 					e.preventDefault();
