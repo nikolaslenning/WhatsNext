@@ -79,17 +79,23 @@ function pull() {
 			// step one make btn
             
             
-			savebtn.text('Save')
-			$(savebtn).on("click", function () {
-                
-                
-                // if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)){
-                    // 	savedcards.push(currentElement)
-                    // }
-                    // text area is saved in local storage
-                    
-                    localStorage.setItem("movieCardList",JSON.stringify (savedcards))
-                })
+            $(savebtn).on("click", function () {
+				console.log(savebtn)
+
+
+				//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
+				savedcards.push(currentElement)
+				// }
+
+				// 	// // text area is saved in local storage
+				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
+
+				savedcards = JSON.parse(localStorage.getItem("movieCardList"));
+				let temp = localStorage.getItem('movieCardList');
+				if (!temp) {
+					temp = movieCardList
+}
+			})
                 // data is retreved and displayed in textarea
                 
                 // step two link to on click
