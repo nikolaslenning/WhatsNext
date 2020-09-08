@@ -1,6 +1,6 @@
 // Variables that hold our AJAX request information 
 let savedcards = [];
-// console.log(savedcards)
+console.log(savedcards)
 var newSettings = {
 	"async": true,
 	"crossDomain": true,
@@ -94,14 +94,11 @@ function pull() {
 			movieCardDiv.append(dropDownContainer);
 			// step one make btn
 			
-			$(moreBtn).on('click', function() {
-				console.log('Clicked' + JSON.stringify(currentElement));
-				
-			})
+		
 			
 			savebtn.text('Save');
 			$(savebtn).on("click", function () {
-				console.log(savebtn)
+				
 				
 				
 				//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
