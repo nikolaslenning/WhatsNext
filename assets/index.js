@@ -105,7 +105,7 @@ function pull() {
 				
 				
 				//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
-					savedcards.push(currentElement)
+					// savedcards.push(currentElement)
 					// }
 					
 					// 	// // text area is saved in local storage
