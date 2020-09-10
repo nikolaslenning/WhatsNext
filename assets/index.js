@@ -334,7 +334,7 @@ function pull() {
 					
 					if (criticRating[i].Source === "Internet Movie Database") {
 						var imdbIcon = $("<img>");
-						imdbIcon.attr("src", "./IMG/imdb_logo.jpeg").addClass("IMDBIcon");
+						imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("IMDBIcon");
 						var imdbNode = $("<div>").html(imdbIcon);
 						var imdbNodeText = criticRating[i].Value;
 						boxCriticRating.append(imdbNode);
@@ -343,7 +343,7 @@ function pull() {
 					}
 					else if (criticRating[i].Source === "Rotten Tomatoes") {
 						var rottenTomIcon = $('<img>');
-						rottenTomIcon.attr('src', './IMG/tomato.png').addClass('RTIcon')
+						rottenTomIcon.attr('src', './assets/IMG/tomato.png').addClass('RTIcon')
 						var tomatoNode = $('<div>').html(rottenTomIcon);
 						var tomatoNodeText = criticRating[i].Value;
 						boxCriticRating.append(tomatoNode);
@@ -352,7 +352,7 @@ function pull() {
 					}
 					else if (criticRating[i].Source === "Metacritic") {
 						var metaIcon = $('<img>');
-						metaIcon.attr('src', './IMG/metacritic.png').addClass("metaIcon");
+						metaIcon.attr('src', './assets/IMG/metacritic.png').addClass("metaIcon");
 						var metaNode = $('<div>').html(metaIcon);
 						var metaNodeText = criticRating[i].Value;
 						boxCriticRating.append(metaNode);
@@ -391,6 +391,46 @@ function pull() {
 					swiper.slideTo(99, 0);
 				});
 			});
+			
+			$(moreBtn).on('click', function (event) {
+				console.log('Clicked' + JSON.stringify(currentElement));
+				//console.dir(currentElement);
+				
+				$('#modal-id').empty();
+
+				// var dropDownContainer = $('<div uk-modal>');
+				var dropDownDiv = $('<div>');
+				var typeDiv = $('<div>');
+				var runtimeDiv = $('<div>');
+				var modalTitle = $('<div>');
+				
+				modalTitle.text('Title: ' + $(this).attr('data-title'))
+				typeDiv.text('Type: ' + $(this).attr('data-type'))
+				runtimeDiv.text('Runtime: ' + $(this).attr('data-runtime'));
+				dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
+
+
+				var country = $('<div>');
+				//country.text('Country: ' + originCountry)
+				console.log(originCountry);
+				console.log(MPAArating);
+
+				moreBtn.attr('data-country', originCountry);
+				country.text('Country: ' + $(this).attr('data-country'));
+
+				var rating = $('<div>');
+				rating.text('MPAA Rating: ' + MPAArating);
+				// dropDownContainer.attr('id', 'modal-id');
+				dropDownDiv.append(modalTitle);
+				dropDownDiv.append(typeDiv);
+				dropDownDiv.append(runtimeDiv);
+				//dropDownDiv.append(country);
+				//dropDownDiv.append(rating);
+				$('#modal-id').append(dropDownDiv);
+
+				console.log($(this).attr('data-country'));
+
+			})
 		});
 	});
 };
