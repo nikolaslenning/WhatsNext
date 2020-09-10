@@ -1,6 +1,7 @@
 // Variables that hold our AJAX request information 
 let savedcards = [];
-
+var originCountry = window.originCountry || (window.originCountry = {});
+var MPAArating = window.MPAArating || (window.MPAArating = {});
 
 console.log(savedcards)
 
@@ -34,16 +35,14 @@ function pull() {
 		var cardBox = $('#swiper-wrapper-coming');
 		//variable that takes slice of ajax info from index 0 to 99
 		var arraySlice = newResponse.ITEMS.slice(0, 99)
-		console.log(newResponse);
+		// console.log(newResponse);
 		//  save card active
 
 
 		arraySlice.forEach(function (currentElement, index, array) {
-			// console.log(arraySlice);
+			
 			//create containers to hold information being returned
-			// console.log(currentElement);
 			var movieCardDiv = $('<div>');
-			//var dropDownContainer = $('<div uk-modal>');
 			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
@@ -55,82 +54,51 @@ function pull() {
 			let savebtn = $('<button>');
 			let breaks = $('<br>');
 			let moreBtn = $('<button>');
-			//const apostrophe = /&#39/gi;
-			//var saveIcon = $('<i>');
-
+			
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
 			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
-			titleDiv.text(currentElement.title); //
-			// titleDiv.replace(apostrophe, "'");
-			// console.log(currentElement.title);
+			titleDiv.text(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
 			runtimeDiv.text("Runtime: " + currentElement.runtime);
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
-
-			//dropDownContainer.attr('class', 'uk-inline')
-
-
-			 dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
-			// dropDownContainer.attr('id', 'modal-id');
+			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
 			
-			
-
 			moreBtn.attr('type', 'button');
 			moreBtn.attr('uk-toggle', 'target: #modal-id');
 			moreBtn.text('More Info');
 			moreBtn.attr('data-title', movieTitle);
-			moreBtn.attr('data-netflix-id', currentElement.netflixid);
 			moreBtn.attr('data-runtime', currentElement.runtime);
 			moreBtn.attr('data-type', currentElement.type);
-			moreBtn.attr('data-country', currentElement.runtime);
-		
-			//saveIcon.attr('uk-icon', 'floppy-o');
 
 			// appending containers housing info from ajax request to one container, then append that container to the carousel container swiper-wrapper
 			movieCardDiv.append(imageDiv);
 			movieCardDiv.append(titleDiv);
 			movieCardDiv.append(synopsisDiv);
-
-
-			
-			//dropDownContainer.append(dropDownDiv);
-			// dropDownDiv.append(movieTitle);
-			// dropDownDiv.append(typeDiv);
-			// dropDownDiv.append(runtimeDiv);
-
 			cardBox.append(movieCardDiv);
-
-			//savebtn.append(saveIcon);
 			movieCardDiv.append(savebtn);
 			movieCardDiv.append(breaks);
 			movieCardDiv.append(moreBtn);
 
-			//movieCardDiv.append(dropDownContainer);
+		
 			// step one make btn
-
-
 			savebtn.text('Save');
 			$(savebtn).on("click", function () {
 				console.log(savebtn)
-
-
 
 				//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
 				savedcards.push(currentElement)
 				// }
 
-
 				// 	// // text area is saved in local storage
 				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
-
 				savedcards = JSON.parse(localStorage.getItem("movieCardList"));
 
 				let temp = localStorage.getItem('movieCardList');
 				if (!temp) {
 					temp = movieCardList
-}
+				}
 
 			})
 			// data is retreved and displayed in textarea
@@ -145,14 +113,12 @@ function pull() {
 				url: queryURL,
 				method: "GET"
 			}).then(function (responseOMDB) {
-				console.log(responseOMDB);
-				var responseLength = responseOMDB.length;
+				
 				//create variables for the information recieved from ajax request
-				var MPAArating = responseOMDB.Rated;
-				var originCountry = responseOMDB.Country;
+				MPAArating = responseOMDB.Rated;
+				originCountry = responseOMDB.Country;
 				var criticRating = responseOMDB.Ratings;
-				var runtimeOMDB = responseOMDB.Runtime; // not sure if needed or a way to not display if result is N/A
-
+				
 				//create containers to house the information holding variables above
 				var boxMPAA = $('<p>');
 				var boxOriginCountry = $('<p>');
@@ -161,24 +127,15 @@ function pull() {
 				//adding information recieved to the containers that were created above
 				boxMPAA.text('MPAA Rating: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
-				// boxCriticRating.text('Critic Rating: ' + criticRating);
-
+				
 				//appending smaller containers houseing info to the main container displayed in the carousel
 				dropDownDiv.append(boxMPAA);
 				dropDownDiv.append(boxOriginCountry);
 				movieCardDiv.append(boxCriticRating);
-				//runtimeDiv.append(runtimeOMDB); // not sure if needed or a way to not display if result is N/A
 
-				// console.log(responseOMDB);
-				// console.log(criticRating);
-				// console.log(originCountry);
 				for (var i = 0; i < criticRating.length; i++) {
 					var ratingDiv = $('<div>');
-					var criticResponse = responseOMDB.Ratings[i];
-					//var ratingSource = criticResponse.Source;
-					//var ratingValue = criticResponse.Value
-					// console.log('criticResponse', '---------', criticResponse);
-					//ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
+					
 					if (criticRating[i].Source === "Internet Movie Database") {
 						var imdbIcon = $("<img>");
 						imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("IMDBIcon");
@@ -240,31 +197,47 @@ function pull() {
 				});
 			});
 
-			$(moreBtn).on('click', function(event) {
+			$(moreBtn).on('click', function (event) {
 				console.log('Clicked' + JSON.stringify(currentElement));
 				//console.dir(currentElement);
-				console.log($(this).attr('data-title'));
-				$('#modal-id').empty();
 				
+				$('#modal-id').empty();
+
 				// var dropDownContainer = $('<div uk-modal>');
 				var dropDownDiv = $('<div>');
 				var typeDiv = $('<div>');
-				typeDiv.text($(this).attr('data-type'))
 				var runtimeDiv = $('<div>');
-				runtimeDiv.text($(this).attr('data-runtime'));
-				dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
-				// dropDownContainer.attr('id', 'modal-id');
-				dropDownDiv.append($(this).attr('data-title'));
-				dropDownDiv.append(typeDiv);
-				dropDownDiv.append(runtimeDiv);	
-				$('#modal-id').append(dropDownDiv);
+				var modalTitle = $('<div>');
 				
+				modalTitle.text('Title: ' + $(this).attr('data-title'))
+				typeDiv.text('Type: ' + $(this).attr('data-type'))
+				runtimeDiv.text('Runtime: ' + $(this).attr('data-runtime'));
+				dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
+
+
+				var country = $('<div>');
+				//country.text('Country: ' + originCountry)
+				console.log(originCountry);
+				console.log(MPAArating);
+
+				moreBtn.attr('data-country', originCountry);
+				country.text('Country: ' + $(this).attr('data-country'));
+
+				var rating = $('<div>');
+				rating.text('MPAA Rating: ' + MPAArating);
+				// dropDownContainer.attr('id', 'modal-id');
+				dropDownDiv.append(modalTitle);
+				dropDownDiv.append(typeDiv);
+				dropDownDiv.append(runtimeDiv);
+				//dropDownDiv.append(country);
+				//dropDownDiv.append(rating);
+				$('#modal-id').append(dropDownDiv);
+
+				console.log($(this).attr('data-country'));
 
 			})
-
 		});
 	});
-
 
 	//2nd AJAx REquest that pulls netflix movies that are leaving. Same as the entire block of code above
 
@@ -274,69 +247,65 @@ function pull() {
 		var arraySlice = expireResponse.ITEMS.slice(0, 99)
 
 		arraySlice.forEach(function (currentElement, index, array) {
-			// console.log(currentElement);
-			// console.log(currentElement.title);
-			// console.log(newResponse.ITEMS);
+			
 			var movieCardDiv = $('<div>');
-			var dropDownContainer = $('<div uk-modal>');
 			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
 			var typeDiv = $('<p>');
 			var runtimeDiv = $('<p>');
 			var synopsisDiv = $('<p>');
 			var imageDiv = $('<img>');
-			var movieTitle = currentElement.title
+			var movieTitle = currentElement.title;
 
 			let savebtn = $('<button>');
 			let breaks = $('<br>');
 			let moreBtn = $('<button>');
-
-			movieCardDiv.attr('class', 'swiper-slide uk-card uk-card-default uk-card-body');
+			
+			//adding class to container that will house all the little information containers
+			// dynamically adding infomation recieved from ajax request to containors created above
+			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
 			titleDiv.text(currentElement.title);
-			// console.log(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
 			runtimeDiv.text("Runtime: " + currentElement.runtime);
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
-
-			//dropDownContainer.attr('class', 'uk-inline')
 			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
-			dropDownContainer.attr('id', 'modal-id');
-
-
+			
 			moreBtn.attr('type', 'button');
-			moreBtn.text('More Info')
 			moreBtn.attr('uk-toggle', 'target: #modal-id');
+			moreBtn.text('More Info');
+			moreBtn.attr('data-title', movieTitle);
+			moreBtn.attr('data-runtime', currentElement.runtime);
+			moreBtn.attr('data-type', currentElement.type);
 
+			// appending containers housing info from ajax request to one container, then append that container to the carousel container swiper-wrapper
 			movieCardDiv.append(imageDiv);
 			movieCardDiv.append(titleDiv);
 			movieCardDiv.append(synopsisDiv);
-
-			dropDownContainer.append(dropDownDiv);
-			dropDownDiv.append(movieTitle);
-			dropDownDiv.append(typeDiv);
-			dropDownDiv.append(runtimeDiv);
 			cardBox.append(movieCardDiv);
-
-			movieCardDiv.append(savebtn)
+			movieCardDiv.append(savebtn);
 			movieCardDiv.append(breaks);
 			movieCardDiv.append(moreBtn);
-			movieCardDiv.append(dropDownContainer);
+
+		
 			// step one make btn
-
-
-			savebtn.text('Save')
+			savebtn.text('Save');
 			$(savebtn).on("click", function () {
+				console.log(savebtn)
 
+				//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
+				savedcards.push(currentElement)
+				// }
 
-				if (!savedcards.find(mov => mov.netflixid === currentElement.netflixid)) {
-					savedcards.push(currentElement)
+				// 	// // text area is saved in local storage
+				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
+				savedcards = JSON.parse(localStorage.getItem("movieCardList"));
+
+				let temp = localStorage.getItem('movieCardList');
+				if (!temp) {
+					temp = movieCardList
 				}
 
-				// get text from wawa 
-				// text area is saved in local storage
-
-				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
 			})
 
 			var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
@@ -344,8 +313,8 @@ function pull() {
 				url: queryURL,
 				method: "GET"
 			}).then(function (responseOMDB) {
-				var MPAArating = responseOMDB.Rated;
-				var originCountry = responseOMDB.Country;
+				MPAArating = responseOMDB.Rated;
+				originCountry = responseOMDB.Country;
 				var criticRating = responseOMDB.Ratings
 
 				var boxMPAA = $('<p>');
@@ -354,22 +323,15 @@ function pull() {
 
 				boxMPAA.text('Rated: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
-				//boxCriticRating.text('Critic Rating: ' + JSON.stringify(criticRating));
-
+				
 				dropDownDiv.append(boxMPAA);
 				dropDownDiv.append(boxOriginCountry);
 				movieCardDiv.append(boxCriticRating);
 
-				// console.log(responseOMDB);
-				// console.log(criticRating);
-				// console.log(originCountry);
+				
 				for (var i = 0; i < criticRating.length; i++) {
 					var ratingDiv = $('<div>');
-					var criticResponse = responseOMDB.Ratings[i];
-					//var ratingSource = criticResponse.Source;
-					//var ratingValue = criticResponse.Value
-					// console.log('criticResponse', '---------', criticResponse);
-					//ratingDiv.text(`Critic Rating: ${ratingValue} from ${ratingSource}`);
+					
 					if (criticRating[i].Source === "Internet Movie Database") {
 						var imdbIcon = $("<img>");
 						imdbIcon.attr("src", "./IMG/imdb_logo.jpeg").addClass("IMDBIcon");
@@ -399,6 +361,7 @@ function pull() {
 					}
 					movieCardDiv.append(ratingDiv);
 				}
+				
 				var appendNumber = 600;
 				var prependNumber = 1;
 				var swiper = new Swiper('.swiper-container', {
