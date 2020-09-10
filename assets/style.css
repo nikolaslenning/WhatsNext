@@ -4,7 +4,7 @@
   }
 
   body {
-    background-color: black;
+    background-color: #000;
   }
 
   #navbar {
@@ -67,33 +67,33 @@
 
   #title {
     font-family: 'Righteous', cursive;
-    color: black;
+    color: #000;
   }
 
   footer {
     width: auto;
     height: 10%;
-    background-color: black;
+    background-color: #000;
     margin-top: 25px;
   }
 
   .swiper-container {
     height: 720px;
     text-align: center;
-    background-color: black;
+    background-color: #000;
   }
 
   footer {
     width: auto;
     height: 10%;
-    background-color: black;
+    background-color: #000;
     margin-top: 25px;
   }
 
   .swiper-container {
     height: 710px;
     text-align: center;
-    background-color: black;
+    background-color: #000;
   }
 
   .IMDBIcon {
