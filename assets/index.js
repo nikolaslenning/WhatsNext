@@ -249,9 +249,9 @@ function pull() {
 				// var dropDownContainer = $('<div uk-modal>');
 				var dropDownDiv = $('<div>');
 				var typeDiv = $('<div>');
-				typeDiv.text($(this).attr('data-type'))
+				typeDiv.text('Type: ' + $(this).attr('data-type'))
 				var runtimeDiv = $('<div>');
-				runtimeDiv.text($(this).attr('data-runtime'));
+				runtimeDiv.text('Runtime: ' + $(this).attr('data-runtime'));
 				dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
 				// dropDownContainer.attr('id', 'modal-id');
 				dropDownDiv.append($(this).attr('data-title'));
