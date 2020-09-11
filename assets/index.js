@@ -40,7 +40,7 @@ function pull() {
 
 
 		arraySlice.forEach(function (currentElement, index, array) {
-			
+
 			//create containers to hold information being returned
 			var movieCardDiv = $('<div>');
 			var dropDownDiv = $('<div>');
@@ -54,17 +54,17 @@ function pull() {
 			let savebtn = $('<button>');
 			let breaks = $('<br>');
 			let moreBtn = $('<button>');
-			
+
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
-			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
+			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body uk-responsive-width");
 			titleDiv.text(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
 			runtimeDiv.text("Runtime: " + currentElement.runtime);
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
 			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
-			
+
 			moreBtn.attr('type', 'button');
 			moreBtn.attr('uk-toggle', 'target: #modal-id');
 			moreBtn.text('More Info');
@@ -81,28 +81,27 @@ function pull() {
 			movieCardDiv.append(breaks);
 			movieCardDiv.append(moreBtn);
 
-		
+
 			// step one make btn
 			savebtn.text('Save');
-			$(savebtn).on("click", function () {
-				console.log(savebtn)
-
-				//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
-				savedcards.push(currentElement)
-				// }
-
-				// 	// // text area is saved in local storage
-				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
-				savedcards = JSON.parse(localStorage.getItem("movieCardList"));
-
-				let temp = localStorage.getItem('movieCardList');
-				if (!temp) {
-					temp = movieCardList
-				}
-
-			})
+			function wawa(saveBtn, keyName) {
+				$(savebtn).on("click", function () {
+					console.log(savebtn)
+					//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
+					savedcards.push(currentElement)
+					// }
+					//  // // text area is saved in local storage
+					localStorage.setItem("movieCardList", JSON.stringify(savedcards))
+					savedcards = JSON.parse(localStorage.getItem("movieCardList"));
+					let temp = localStorage.getItem('movieCardList');
+					if (!temp) {
+						temp = movieCardList
+					}
+				})
+			}
+			wawa("#saveBtn", ".user-1", "data10")
+			//wawa("#saveBtn1", ".user-2", "data9")
 			// data is retreved and displayed in textarea
-
 			// step two link to on click
 			// step three save to storage 
 			// step 4 pull on to new page
@@ -113,12 +112,12 @@ function pull() {
 				url: queryURL,
 				method: "GET"
 			}).then(function (responseOMDB) {
-				
+
 				//create variables for the information recieved from ajax request
 				MPAArating = responseOMDB.Rated;
 				originCountry = responseOMDB.Country;
 				var criticRating = responseOMDB.Ratings;
-				
+
 				//create containers to house the information holding variables above
 				var boxMPAA = $('<p>');
 				var boxOriginCountry = $('<p>');
@@ -127,7 +126,7 @@ function pull() {
 				//adding information recieved to the containers that were created above
 				boxMPAA.text('MPAA Rating: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
-				
+
 				//appending smaller containers houseing info to the main container displayed in the carousel
 				dropDownDiv.append(boxMPAA);
 				dropDownDiv.append(boxOriginCountry);
@@ -135,7 +134,7 @@ function pull() {
 
 				for (var i = 0; i < criticRating.length; i++) {
 					var ratingDiv = $('<div>');
-					
+
 					if (criticRating[i].Source === "Internet Movie Database") {
 						var imdbIcon = $("<img>");
 						imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("IMDBIcon");
@@ -200,7 +199,7 @@ function pull() {
 			$(moreBtn).on('click', function (event) {
 				console.log('Clicked' + JSON.stringify(currentElement));
 				//console.dir(currentElement);
-				
+
 				$('#modal-id').empty();
 
 				// var dropDownContainer = $('<div uk-modal>');
@@ -208,7 +207,7 @@ function pull() {
 				var typeDiv = $('<div>');
 				var runtimeDiv = $('<div>');
 				var modalTitle = $('<div>');
-				
+
 				modalTitle.text('Title: ' + $(this).attr('data-title'))
 				typeDiv.text('Type: ' + $(this).attr('data-type'))
 				runtimeDiv.text('Runtime: ' + $(this).attr('data-runtime'));
@@ -247,7 +246,7 @@ function pull() {
 		var arraySlice = expireResponse.ITEMS.slice(0, 99)
 
 		arraySlice.forEach(function (currentElement, index, array) {
-			
+
 			var movieCardDiv = $('<div>');
 			var dropDownDiv = $('<div>');
 			var titleDiv = $('<h3>');
@@ -260,17 +259,17 @@ function pull() {
 			let savebtn = $('<button>');
 			let breaks = $('<br>');
 			let moreBtn = $('<button>');
-			
+
 			//adding class to container that will house all the little information containers
 			// dynamically adding infomation recieved from ajax request to containors created above
-			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body");
+			movieCardDiv.attr('class', "swiper-slide uk-card uk-card-default uk-card-body uk-responsive-width");
 			titleDiv.text(currentElement.title);
 			typeDiv.text('Type: ' + currentElement.type);
 			runtimeDiv.text("Runtime: " + currentElement.runtime);
 			synopsisDiv.html('Synopsis: ' + currentElement.synopsis);
 			imageDiv.attr('src', currentElement.image);
 			dropDownDiv.attr('class', 'uk-modal-dialog uk-modal-body');
-			
+
 			moreBtn.attr('type', 'button');
 			moreBtn.attr('uk-toggle', 'target: #modal-id');
 			moreBtn.text('More Info');
@@ -287,25 +286,21 @@ function pull() {
 			movieCardDiv.append(breaks);
 			movieCardDiv.append(moreBtn);
 
-		
+
 			// step one make btn
 			savebtn.text('Save');
 			$(savebtn).on("click", function () {
 				console.log(savebtn)
-
-				//   if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
+				//if (!savedcards.this(mov => mov.netflixid === currentElement.netflixid)) {
 				savedcards.push(currentElement)
-				// }
-
-				// 	// // text area is saved in local storage
+				//}
+				//  // // text area is saved in local storage
 				localStorage.setItem("movieCardList", JSON.stringify(savedcards))
 				savedcards = JSON.parse(localStorage.getItem("movieCardList"));
-
 				let temp = localStorage.getItem('movieCardList');
 				if (!temp) {
 					temp = movieCardList
 				}
-
 			})
 
 			var queryURL = "https://www.omdbapi.com/?t=" + movieTitle + "&apikey=trilogy";
@@ -323,15 +318,15 @@ function pull() {
 
 				boxMPAA.text('Rated: ' + MPAArating);
 				boxOriginCountry.text('Country: ' + originCountry);
-				
+
 				dropDownDiv.append(boxMPAA);
 				dropDownDiv.append(boxOriginCountry);
 				movieCardDiv.append(boxCriticRating);
 
-				
+
 				for (var i = 0; i < criticRating.length; i++) {
 					var ratingDiv = $('<div>');
-					
+
 					if (criticRating[i].Source === "Internet Movie Database") {
 						var imdbIcon = $("<img>");
 						imdbIcon.attr("src", "./assets/IMG/imdb_logo.jpeg").addClass("IMDBIcon");
@@ -361,7 +356,7 @@ function pull() {
 					}
 					movieCardDiv.append(ratingDiv);
 				}
-				
+
 				var appendNumber = 600;
 				var prependNumber = 1;
 				var swiper = new Swiper('.swiper-container', {
@@ -391,11 +386,11 @@ function pull() {
 					swiper.slideTo(99, 0);
 				});
 			});
-			
+
 			$(moreBtn).on('click', function (event) {
 				console.log('Clicked' + JSON.stringify(currentElement));
 				//console.dir(currentElement);
-				
+
 				$('#modal-id').empty();
 
 				// var dropDownContainer = $('<div uk-modal>');
@@ -403,7 +398,7 @@ function pull() {
 				var typeDiv = $('<div>');
 				var runtimeDiv = $('<div>');
 				var modalTitle = $('<div>');
-				
+
 				modalTitle.text('Title: ' + $(this).attr('data-title'))
 				typeDiv.text('Type: ' + $(this).attr('data-type'))
 				runtimeDiv.text('Runtime: ' + $(this).attr('data-runtime'));
@@ -432,9 +427,22 @@ function pull() {
 
 			})
 		});
+
+
 	});
+
+	//Calling pull function the start the ajax requests above
+	
+	
+	// $(document).ready(fuction() {
+
+	// 	$(window).resize(function () {
+	// 		if ($(window).width() <= 500) {
+	// 			slidesPerView = 1;
+	// 		} else {
+	// 			slidesPerView = 3;
+	// 		}
+	// 	}).resize();
+	// });
 };
-
-//Calling pull function the start the ajax requests above
-
 pull();
